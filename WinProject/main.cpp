@@ -2,7 +2,7 @@
 //
 
 #include "framework.h"
-#include "WinProject.h"
+#include "Client.h"
 
 #define MAX_LOADSTRING 100
 
@@ -17,11 +17,14 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
+// SAL 주석(_In_) : 소스코드 주석언어, 해당 변수의 용도를 적어놓는 것
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance /* 실행 된 프로세스의 시작주소. 이때 프로세스를 여러개 실행해도 같은 주소값을 갖는다. 
+                                                  이 프로그램이 자신만의 가상메모리를 사용하기 떄문. 물론 물리적인 주소는 다르다. */,
+                     _In_opt_ HINSTANCE hPrevInstance /* 먼저 실행 된 프로세스의 시작주소(option) -> 초창기의 윈도우가 그랬고, 지금은 그렇게 동작하지 않음. */,
+                     _In_ LPWSTR    lpCmdLine /* 프로그램 시작시 문자열을 입력하면 들어온다. */,
                      _In_ int       nCmdShow)
 {
+    // 쓰이지 않는 변수 => 참조되지 않는 변수
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
