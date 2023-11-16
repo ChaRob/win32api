@@ -35,17 +35,23 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance /* 실행 된 프로세스의 시
     LoadStringW(hInstance, IDC_CLIENT, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
-    // 애플리케이션 초기화를 수행합니다:
+    // 애플리케이션 초기화를 수행합니다: 윈도우 창을 생성합니다.
     if (!InitInstance (hInstance, nCmdShow))
     {
         return FALSE;
     }
 
+    // 단축키 정보 등록
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
 
     MSG msg;
 
     // 기본 메시지 루프입니다:
+    // 
+    // GetMessage
+    // 메세지 큐에서 메시지를 확인할 때까지 대기함
+    // 
+    
     while (GetMessage(&msg, nullptr, 0, 0))
     {
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
