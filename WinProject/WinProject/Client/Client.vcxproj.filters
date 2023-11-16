@@ -24,17 +24,17 @@
     <ClInclude Include="Resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="WinProject.h">
+    <ClInclude Include="Client.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="WinProject.cpp">
+    <ClCompile Include="Client.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="WinProject.rc">
+    <ResourceCompile Include="Client.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>
@@ -42,7 +42,7 @@
     <Image Include="small.ico">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="WinProject.ico">
+    <Image Include="Client.ico">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

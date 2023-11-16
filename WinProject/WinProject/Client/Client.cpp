@@ -1,4 +1,4 @@
-﻿// main.cpp : 애플리케이션에 대한 진입점을 정의합니다.
+﻿// Client.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
 
 #include "framework.h"
@@ -18,11 +18,11 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 // SAL 주석(_In_) : 소스코드 주석언어, 해당 변수의 용도를 적어놓는 것
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance /* 실행 된 프로세스의 시작주소. 이때 프로세스를 여러개 실행해도 같은 주소값을 갖는다. 
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance /* 실행 된 프로세스의 시작주소. 이때 프로세스를 여러개 실행해도 같은 주소값을 갖는다.
                                                   이 프로그램이 자신만의 가상메모리를 사용하기 떄문. 물론 물리적인 주소는 다르다. */,
-                     _In_opt_ HINSTANCE hPrevInstance /* 먼저 실행 된 프로세스의 시작주소(option) -> 초창기의 윈도우가 그랬고, 지금은 그렇게 동작하지 않음. */,
-                     _In_ LPWSTR    lpCmdLine /* 프로그램 시작시 문자열을 입력하면 들어온다. */,
-                     _In_ int       nCmdShow)
+    _In_opt_ HINSTANCE hPrevInstance /* 먼저 실행 된 프로세스의 시작주소(option) -> 초창기의 윈도우가 그랬고, 지금은 그렇게 동작하지 않음. */,
+    _In_ LPWSTR    lpCmdLine /* 프로그램 시작시 문자열을 입력하면 들어온다. */,
+    _In_ int       nCmdShow)
 {
     // 쓰이지 않는 변수 => 참조되지 않는 변수
     UNREFERENCED_PARAMETER(hPrevInstance);
@@ -32,7 +32,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance /* 실행 된 프로세스의 시
 
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_WINPROJECT, szWindowClass, MAX_LOADSTRING);
+    LoadStringW(hInstance, IDC_CLIENT, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
     // 애플리케이션 초기화를 수행합니다:
@@ -41,7 +41,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance /* 실행 된 프로세스의 시
         return FALSE;
     }
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINPROJECT));
+    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
 
     MSG msg;
 
@@ -76,10 +76,10 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.cbClsExtra     = 0;
     wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WINPROJECT));
+    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_CLIENT));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_WINPROJECT);
+    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_CLIENT);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
