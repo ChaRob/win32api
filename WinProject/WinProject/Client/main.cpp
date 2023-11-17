@@ -50,6 +50,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance /* 실행 된 프로세스의 시
     // 
     // GetMessage
     // 메세지 큐에서 메시지를 확인할 때까지 대기함
+    // msg.message = WM_QUIT인 경우, false를 반환함 => 프로그램 종료
+    // 이는 모든 작업(창닫기, 함수종료 등)이 마무리되고 반환되는 값 
+    // 게임 클라이언트로 제작하기에는 부적합하다.
     // 
     
     while (GetMessage(&msg, nullptr, 0, 0))
@@ -130,6 +133,21 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
+
+#include<vector>
+using std::vector;
+
+POINT LmousePos;
+POINT RmousePos;
+
+struct OBJinfo {
+    POINT g_objPos;
+    POINT g_objScale;
+};
+
+vector<OBJinfo> objects;
+bool LbuttonDown;
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -151,13 +169,95 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
-    case WM_PAINT:
+    case WM_PAINT: // 무효화 영역(Invaildate Rect)이 발생한 경우 => 창이 줄였다가 다시 켜지는 경우
         {
             PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+            // 윈도우 핸들(hWnd)
+            // 윈도우에 무엇인가를 그리려면 항상 선언해야함.
+            HDC hdc = BeginPaint(hWnd, &ps); // Device Context(그리기 작업 수행, 필요한 데이터의 집합)를 만들어서 ID 핸들값을 반환
+            // DC의 목적지는 hWnd
+            // Dc의 펜은 기본펜(검정)
+            // DC의 브러쉬는 기본 브러쉬(White)
+            
+            // 윈도우 좌표 : pixel 단위
+            // hdc, 우측, 하단, 가로크기, 세로세로크기
+            // 그리고 브러쉬로 안을 채움.
+            // pixel 하나씩 메모리에 RGB 3byte씩 들어있음.
+            Rectangle(hdc, 10, 10, 110, 110);
+
+            // SelectObject가 void Type*으로 나오기 때문에, 어떤 오브젝트든 캐스팅하여 받을 수 있다.
+            HPEN hPen = CreatePen(PS_DASH, 1, RGB(255, 0, 0));
+            HPEN hDefalutPen = (HPEN)SelectObject(hdc, hPen);
+
+            //HBRUSH hBrush = (HBRUSH)GetStockObject(HOLLOW_BRUSH); // 기본으로 내장되어 있는 오브젝트를 가져올 수 있다.
+            HBRUSH hBrush = CreateSolidBrush(RGB(0, 0, 255));
+            HBRUSH hDefalutBrush = (HBRUSH)SelectObject(hdc, hBrush);
+
+            if (LbuttonDown) {
+                Rectangle(hdc, 
+                    LmousePos.x, LmousePos.y,
+                    RmousePos.x, RmousePos.y);
+            }
+
+            for (int i = 0; i < objects.size(); i++)
+            {
+                Rectangle(hdc,
+                    objects[i].g_objPos.x - objects[i].g_objScale.x / 2, objects[i].g_objPos.y - objects[i].g_objScale.y / 2,
+                    objects[i].g_objPos.x + objects[i].g_objScale.x / 2, objects[i].g_objPos.y + objects[i].g_objScale.y / 2);
+            }
+
+            // 사용한 펜과 브러쉬를 제거
+            (HPEN)SelectObject(hdc, hDefalutPen);
+            DeleteObject(hPen);
+
             EndPaint(hWnd, &ps);
         }
+        break;
+    /* wParam으로 키보드 값, lParam으로 마우스 값을 인식할 수 있음. */
+    case WM_KEYDOWN:
+        {
+            switch (wParam)
+            {
+                case VK_UP: // 미리 명시된 값을 통해서 인식
+                    //g_objPos.y -= 10;
+                    break;
+                case VK_DOWN:
+                    //g_objPos.y += 10;
+                    break;
+                case VK_LEFT:
+                    //g_objPos.x -= 10;
+                    break;
+                case VK_RIGHT:
+                    //g_objPos.x += 10;
+                    break;
+                //case 'W': // 또는 아스키코드값을 통해서 인식할 수 있다.
+                //    break;
+                default:
+                    break;
+            }
+            InvalidateRect(hWnd, nullptr, true);
+        }
+        break;
+    case WM_LBUTTONDOWN:
+        // lParam으로 마우스 x, y좌표가 들어온다.
+        // 이때, lParam의 상위 2바이트와 하위 2바이트를 나누어서 좌표값을 알아낸다.
+        LmousePos.x = LOWORD(lParam);
+        LmousePos.y = HIWORD(lParam);
+        // 강제로 윈도우 창의 무효화영역으로 지정해준다. 이렇게 하여 WM_PAINT 메세지를 다시 호출한다.
+        InvalidateRect(hWnd, nullptr, true);
+        LbuttonDown = true;
+        break;
+    case WM_MOUSEMOVE:
+        RmousePos.x = LOWORD(lParam);
+        RmousePos.y = HIWORD(lParam);
+        InvalidateRect(hWnd, nullptr, true);
+        break;
+    case WM_LBUTTONUP:
+        OBJinfo newObj;
+        newObj.g_objPos = { (LmousePos.x + RmousePos.x) / 2, (LmousePos.y + RmousePos.y) / 2 };
+        newObj.g_objScale = { abs(LmousePos.x - RmousePos.x), abs(LmousePos.y - RmousePos.y) };
+        objects.push_back(newObj);
+        LbuttonDown = false;
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
