@@ -1,8 +1,8 @@
 ﻿// Client.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
 
-#include "framework.h"
 #include "Client.h"
+#include "pch.h"
 
 #define MAX_LOADSTRING 100
 
@@ -10,6 +10,7 @@
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
+HWND g_hWnd; // 전역 윈도우 핸들
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -41,6 +42,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance /* 실행 된 프로세스의 시
         return FALSE;
     }
 
+    // Core 초기화 진행. 실패하면 실패했다는 메세지 창을 띄우고 종료.
+    if (FAILED(CCore::GetInstance()->Init(g_hWnd, POINT{ 1280, 768 }))) {
+        MessageBox(nullptr, L"Core 객체 초기화 실패", L"ERROR", MB_OK);
+
+        return FALSE;
+    }
+
     // 단축키 정보 등록
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
 
@@ -48,19 +56,48 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance /* 실행 된 프로세스의 시
 
     // 기본 메시지 루프입니다:
     // 
-    // GetMessage
-    // 메세지 큐에서 메시지를 확인할 때까지 대기함
-    // msg.message = WM_QUIT인 경우, false를 반환함 => 프로그램 종료
-    // 이는 모든 작업(창닫기, 함수종료 등)이 마무리되고 반환되는 값 
-    // 게임 클라이언트로 제작하기에는 부적합하다.
-    // 
-    
-    while (GetMessage(&msg, nullptr, 0, 0))
+    /* GetMessage
+    * 메세지 큐에서 메시지를 확인할 때까지 대기함
+    * msg.message = WM_QUIT인 경우, false를 반환함 => 프로그램 종료
+    * 이는 모든 작업(창닫기, 함수종료 등)이 마무리되고 반환되는 값 
+    * 게임 클라이언트로 제작하기에는 부적합하다.
+    */ 
+
+    // SetTimer(g_hWnd, 0, 0, nullptr);
+    /*while (GetMessage(&msg, nullptr, 0, 0))
     {
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
+        }
+    }*/
+    // 프로그램 종료시 타이머 제거
+    // KillTimer(g_hWnd, 0);
+
+    /*
+        PeekMessage : 슬쩍보다
+        메세지 유무와 관계없이 반환한다. 즉, 메세지큐에 메세지가 있으면 true, 없으면 false를 반환함
+    */
+
+    while (true)
+    {
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+        {
+            // 받은 메세지가 종료메세지라면 프로그램 종료
+            if (msg.message == WM_QUIT) break;
+
+            if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+            {
+                TranslateMessage(&msg);
+                DispatchMessage(&msg);
+            }
+        }
+        else {
+            // 메세지가 없는 대부분의 시간의 경우
+            // 이곳에서 게임 코드를 수행합니다.
+
+            CCore::GetInstance()->Progress();
         }
     }
 
@@ -109,16 +146,16 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+   g_hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
-   if (!hWnd)
+   if (!g_hWnd)
    {
       return FALSE;
    }
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
+   ShowWindow(g_hWnd, nCmdShow);
+   UpdateWindow(g_hWnd);
 
    return TRUE;
 }
@@ -258,6 +295,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         newObj.g_objScale = { abs(LmousePos.x - RmousePos.x), abs(LmousePos.y - RmousePos.y) };
         objects.push_back(newObj);
         LbuttonDown = false;
+        break;
+    // SetTimer로 실행되는 구간
+    case WM_TIMER:
+
+
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
