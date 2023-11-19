@@ -1,7 +1,8 @@
 #pragma once
 class CKeyMgr
 {
-public:
 	SINGLE(CKeyMgr);
+public:
+	void Init();
 };
 

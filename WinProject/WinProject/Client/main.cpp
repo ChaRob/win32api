@@ -212,6 +212,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // 윈도우 핸들(hWnd)
             // 윈도우에 무엇인가를 그리려면 항상 선언해야함.
             HDC hdc = BeginPaint(hWnd, &ps); // Device Context(그리기 작업 수행, 필요한 데이터의 집합)를 만들어서 ID 핸들값을 반환
+            /*
             // DC의 목적지는 hWnd
             // Dc의 펜은 기본펜(검정)
             // DC의 브러쉬는 기본 브러쉬(White)
@@ -246,7 +247,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // 사용한 펜과 브러쉬를 제거
             (HPEN)SelectObject(hdc, hDefalutPen);
             DeleteObject(hPen);
+            
 
+            */
             EndPaint(hWnd, &ps);
         }
         break;

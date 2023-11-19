@@ -11,4 +11,11 @@
 							 {\
 								static type mgr;\
 								return &mgr;\
-							 }
+							 }\
+					private:\
+							type();\
+							~type();
+
+// deltaTime °£·«È­
+#define DeltaTime CTimeMgr::GetInstance()->GetDeltaTime()
+#define DeltaTimef CTimeMgr::GetInstance()->GetDeltaTimef()

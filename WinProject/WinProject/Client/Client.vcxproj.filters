@@ -20,6 +20,12 @@
     <Filter Include="Engine\03.Manager\KeyMgr">
       <UniqueIdentifier>{a1ee98b7-3d10-4127-8baf-e4e7621b14ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04.Object">
+      <UniqueIdentifier>{b249479d-fec0-41ce-b61e-7d8686744201}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\CTimeMgr">
+      <UniqueIdentifier>{b8c3fcce-5016-47cc-977b-421822c2a435}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -46,6 +52,15 @@
     <ClInclude Include="CKeyMgr.h">
       <Filter>Engine\03.Manager\KeyMgr</Filter>
     </ClInclude>
+    <ClInclude Include="CObject.h">
+      <Filter>Engine\04.Object</Filter>
+    </ClInclude>
+    <ClInclude Include="struct.h">
+      <Filter>Engine\01.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CTimeMgr.h">
+      <Filter>Engine\03.Manager\CTimeMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -54,6 +69,12 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CKeyMgr.cpp">
       <Filter>Engine\03.Manager\KeyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CObject.cpp">
+      <Filter>Engine\04.Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CTimeMgr.cpp">
+      <Filter>Engine\03.Manager\CTimeMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
