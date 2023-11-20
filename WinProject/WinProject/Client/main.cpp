@@ -275,7 +275,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 default:
                     break;
             }
-            InvalidateRect(hWnd, nullptr, true);
+            //InvalidateRect(hWnd, nullptr, true);
         }
         break;
     case WM_LBUTTONDOWN:
@@ -284,13 +284,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         LmousePos.x = LOWORD(lParam);
         LmousePos.y = HIWORD(lParam);
         // 강제로 윈도우 창의 무효화영역으로 지정해준다. 이렇게 하여 WM_PAINT 메세지를 다시 호출한다.
-        InvalidateRect(hWnd, nullptr, true);
+        //InvalidateRect(hWnd, nullptr, true);
         LbuttonDown = true;
         break;
     case WM_MOUSEMOVE:
         RmousePos.x = LOWORD(lParam);
         RmousePos.y = HIWORD(lParam);
-        InvalidateRect(hWnd, nullptr, true);
+        //InvalidateRect(hWnd, nullptr, true);
         break;
     case WM_LBUTTONUP:
         OBJinfo newObj;

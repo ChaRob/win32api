@@ -8,10 +8,14 @@ CObject g_object;
 CCore::CCore():
 	m_hwnd(0),
 	m_ptResolution{},
-	m_hDC(0){}
+	m_hDC(0),
+	m_hBit(0),
+	m_memDC(0) {}
 CCore::~CCore()
 {
 	ReleaseDC(m_hwnd, m_hDC);
+	DeleteDC(m_memDC);
+	DeleteObject(m_hBit);
 }
 
 int CCore::Init(HWND _hwnd, POINT _ptResolution)
@@ -32,6 +36,15 @@ int CCore::Init(HWND _hwnd, POINT _ptResolution)
 	// 메세지 기반 방식이 아닌, 우리가 원할 때 그림을 그릴 수 있도록 설정함.
 	m_hDC = GetDC(m_hwnd);
 
+	// 이중 버퍼링 용도의 비트맵과 DC 생성
+	m_hBit = CreateCompatibleBitmap(m_hDC, m_ptResolution.x, m_ptResolution.y); // 기존 DC와 호환성 있는 동작이 가능하도록 한 함수
+	m_memDC = CreateCompatibleDC(m_hDC);
+
+	// m_memDC가 기존에 가리키고 있던 bitmap은 사용하지 않으므로 제거한다.
+	HBITMAP hOldBit = (HBITMAP)SelectObject(m_memDC, m_hBit);
+	DeleteObject(hOldBit);
+
+	// 테스트 오브젝트
 	g_object.SetPos(Vector2( m_ptResolution.x / 2, m_ptResolution.y / 2 ));
 	g_object.SetScale(Vector2 {100, 100 });
 
@@ -63,19 +76,19 @@ void CCore::Update()
 		// 숫자값을 조정하는 것으로는 해결하는게 말이 되지 않는다.
 		// 멀티플레이 게임을 생각해보자.
 		// 따라서 모든 컴퓨터의 성능에 상관없이, 일정한 함수 호출(또는 이동량)을 보장해야 한다.
-		newPos.x -= 10 * DeltaTime;
+		newPos.x -= 100 * DeltaTime;
 	}
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) // 눌렸는지 체크하는 방식.
 	{
-		newPos.x += 10 * DeltaTime;
+		newPos.x += 100 * DeltaTime;
 	}
 	if (GetAsyncKeyState(VK_UP) & 0x8000) // 눌렸는지 체크하는 방식.
 	{
-		newPos.y -= 10 * DeltaTime;
+		newPos.y -= 100 * DeltaTime;
 	}
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000) // 눌렸는지 체크하는 방식.
 	{
-		newPos.y += 10 * DeltaTime;
+		newPos.y += 100 * DeltaTime;
 	}
 
 	g_object.SetPos(newPos);
@@ -87,12 +100,19 @@ void CCore::Render()
 	// 게임 화면이라는 것은 매순간마다 계속 변화하는 과정.
 	// 한 장면을 그리고 보여주고, 뒤에서 새로 그린 것을 다시 대체해서 보여주고...반복
 
+	// 그리기 작업 전 화면 청소, 재구성
+	Rectangle(m_memDC, -1, -1, m_ptResolution.x + 1, m_ptResolution.y + 1);
+
 	Vector2 vPos = g_object.GetPos();
 	Vector2 vScale = g_object.GetScale();
 
-	Rectangle(m_hDC, 
+	Rectangle(m_memDC, 
 		int(vPos.x - vScale.x / 2.f),
 		int(vPos.y - vScale.y / 2.f),
 		int(vPos.x + vScale.x / 2.f),
 		int(vPos.y + vScale.y / 2.f));
+
+	// 다른 화면에서 그린 그림을 복사해서 그려준다.
+	// 이 프로젝트(WinAPI)에서는 CPU가 rendering을 담당하지만, DirectX를 사용해서 GPU에게 이 일을 맡기면 속도를 더 늘릴 수 있다.
+	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_memDC, 0, 0, SRCCOPY);
 }
