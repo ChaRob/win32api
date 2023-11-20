@@ -59,6 +59,7 @@ void CCore::Progress()
 {
 	// Manager Update
 	CTimeMgr::GetInstance()->Update();
+	CKeyMgr::GetInstance()->Update();
 
 	Update();
 	Render();
@@ -70,7 +71,8 @@ void CCore::Update()
 	// 윈도우가 활성화되어 있지 않아도 동작하기 때문에, 신경써야함.
 	Vector2 newPos = g_object.GetPos();
 
-	if (GetAsyncKeyState(VK_LEFT) & 0x8000) // 눌렸는지 체크하는 방식.
+	//if (GetAsyncKeyState(VK_LEFT) & 0x8000) // 눌렸는지 체크하는 방식.
+	if (CKeyMgr::GetInstance()->GetKeyState(KEY::LEFT) == KEY_STATE::KEY_HOLD) // 눌렸는지 체크하는 방식.
 	{
 		// 컴퓨터 설정에 따라서 호출하는 함수의 횟수가 다르기 때문에,
 		// 숫자값을 조정하는 것으로는 해결하는게 말이 되지 않는다.
@@ -78,15 +80,15 @@ void CCore::Update()
 		// 따라서 모든 컴퓨터의 성능에 상관없이, 일정한 함수 호출(또는 이동량)을 보장해야 한다.
 		newPos.x -= 100 * DeltaTime;
 	}
-	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) // 눌렸는지 체크하는 방식.
+	if (CKeyMgr::GetInstance()->GetKeyState(KEY::RIGHT) == KEY_STATE::KEY_HOLD) // 눌렸는지 체크하는 방식.
 	{
 		newPos.x += 100 * DeltaTime;
 	}
-	if (GetAsyncKeyState(VK_UP) & 0x8000) // 눌렸는지 체크하는 방식.
+	if (CKeyMgr::GetInstance()->GetKeyState(KEY::UP) == KEY_STATE::KEY_HOLD) // 눌렸는지 체크하는 방식.
 	{
 		newPos.y -= 100 * DeltaTime;
 	}
-	if (GetAsyncKeyState(VK_DOWN) & 0x8000) // 눌렸는지 체크하는 방식.
+	if (CKeyMgr::GetInstance()->GetKeyState(KEY::DOWN) == KEY_STATE::KEY_HOLD) // 눌렸는지 체크하는 방식.
 	{
 		newPos.y += 100 * DeltaTime;
 	}
