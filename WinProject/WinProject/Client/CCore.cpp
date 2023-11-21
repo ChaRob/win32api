@@ -2,8 +2,7 @@
 #include "CCore.h"
 #include "CKeyMgr.h"
 #include "CTimeMgr.h"
-
-CObject g_object;
+#include "SceneMgr.h"
 
 CCore::CCore():
 	m_hwnd(0),
@@ -44,13 +43,10 @@ int CCore::Init(HWND _hwnd, POINT _ptResolution)
 	HBITMAP hOldBit = (HBITMAP)SelectObject(m_memDC, m_hBit);
 	DeleteObject(hOldBit);
 
-	// 테스트 오브젝트
-	g_object.SetPos(Vector2( m_ptResolution.x / 2, m_ptResolution.y / 2 ));
-	g_object.SetScale(Vector2 {100, 100 });
-
 	// Manager 초기화
 	CKeyMgr::GetInstance()->Init();
 	CTimeMgr::GetInstance()->Init();
+	SceneMgr::GetInstance()->Init();
 
 	return S_OK;
 }
@@ -61,10 +57,26 @@ void CCore::Progress()
 	CTimeMgr::GetInstance()->Update();
 	CKeyMgr::GetInstance()->Update();
 
-	Update();
-	Render();
+	SceneMgr::GetInstance()->Update();
+	// Update();
+	// 그리기 작업
+	// 게임 화면이라는 것은 매순간마다 계속 변화하는 과정.
+	// 한 장면을 그리고 보여주고, 뒤에서 새로 그린 것을 다시 대체해서 보여주고...반복
+
+	// 그리기 작업 전 화면 청소, 재구성
+	Rectangle(m_memDC, -1, -1, m_ptResolution.x + 1, m_ptResolution.y + 1);
+
+	// Render();
+	SceneMgr::GetInstance()->Render(m_memDC);
+
+	// 다른 화면에서 그린 그림을 복사해서 그려준다.
+	// 이 프로젝트(WinAPI)에서는 CPU가 rendering을 담당하지만, DirectX를 사용해서 GPU에게 이 일을 맡기면 속도를 더 늘릴 수 있다.
+	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_memDC, 0, 0, SRCCOPY);
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 이 아래는 학습용으로 지금은 사용하지 않음.
+/*
 void CCore::Update()
 {
 	// 비동기 키 입출력 함수
@@ -98,12 +110,6 @@ void CCore::Update()
 
 void CCore::Render()
 {
-	// 그리기 작업
-	// 게임 화면이라는 것은 매순간마다 계속 변화하는 과정.
-	// 한 장면을 그리고 보여주고, 뒤에서 새로 그린 것을 다시 대체해서 보여주고...반복
-
-	// 그리기 작업 전 화면 청소, 재구성
-	Rectangle(m_memDC, -1, -1, m_ptResolution.x + 1, m_ptResolution.y + 1);
 
 	Vector2 vPos = g_object.GetPos();
 	Vector2 vScale = g_object.GetScale();
@@ -114,7 +120,5 @@ void CCore::Render()
 		int(vPos.x + vScale.x / 2.f),
 		int(vPos.y + vScale.y / 2.f));
 
-	// 다른 화면에서 그린 그림을 복사해서 그려준다.
-	// 이 프로젝트(WinAPI)에서는 CPU가 rendering을 담당하지만, DirectX를 사용해서 GPU에게 이 일을 맡기면 속도를 더 늘릴 수 있다.
-	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_memDC, 0, 0, SRCCOPY);
 }
+*/

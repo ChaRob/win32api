@@ -44,6 +44,7 @@ public:
 	int Init(HWND _hwnd, POINT _ptResolution);
 	void Progress();
 	HWND GetMainHwnd() { return m_hwnd; }
+	POINT GetResolution() { return m_ptResolution; }
 
 private:
 	void Update();

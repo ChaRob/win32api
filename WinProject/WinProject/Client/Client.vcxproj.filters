@@ -26,6 +26,24 @@
     <Filter Include="Engine\03.Manager\CTimeMgr">
       <UniqueIdentifier>{b8c3fcce-5016-47cc-977b-421822c2a435}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\05.Scene">
+      <UniqueIdentifier>{97afa453-55ae-4d12-a64c-5c5aa4d32e14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\SceneMgr">
+      <UniqueIdentifier>{bdd6b664-c399-4fee-8287-1b95cf5e71a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\05.Scene\StartScene">
+      <UniqueIdentifier>{1a7c1b30-47a6-42a3-9c3a-7bf5f00e1b40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\Player">
+      <UniqueIdentifier>{dd73202e-886b-48c3-ada7-9169de7d6977}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\Monster">
+      <UniqueIdentifier>{1ab95786-55c2-4248-9373-08c231cc31fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\Missile">
+      <UniqueIdentifier>{7586ca90-649c-46f8-b741-6a5c94ba9728}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -61,6 +79,24 @@
     <ClInclude Include="CTimeMgr.h">
       <Filter>Engine\03.Manager\CTimeMgr</Filter>
     </ClInclude>
+    <ClInclude Include="CScene.h">
+      <Filter>Engine\05.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMgr.h">
+      <Filter>Engine\03.Manager\SceneMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Start.h">
+      <Filter>Engine\05.Scene\StartScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Engine\04.Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Engine\04.Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Missile.h">
+      <Filter>Engine\04.Object\Missile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -75,6 +111,24 @@
     </ClCompile>
     <ClCompile Include="CTimeMgr.cpp">
       <Filter>Engine\03.Manager\CTimeMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene.cpp">
+      <Filter>Engine\05.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMgr.cpp">
+      <Filter>Engine\03.Manager\SceneMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Start.cpp">
+      <Filter>Engine\05.Scene\StartScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Engine\04.Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Engine\04.Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Missile.cpp">
+      <Filter>Engine\04.Object\Missile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

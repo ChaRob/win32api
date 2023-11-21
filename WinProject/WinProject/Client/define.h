@@ -19,3 +19,31 @@
 // deltaTime °£·«È­
 #define DeltaTime CTimeMgr::GetInstance()->GetDeltaTime()
 #define DeltaTimef CTimeMgr::GetInstance()->GetDeltaTimef()
+
+#define PI 3.14159265358979323846
+
+enum class GROUP_TYPE
+{
+	DEFALUT,
+	PLAYER,
+	MISSILE,
+	MONSTER,
+
+	END = 32,
+};
+
+enum class SCENE_TYPE
+{
+	TOOL,
+
+	START,
+	STAGE_1, STAGE_2, STAGE_3,
+
+	END,
+};
+
+#define KEY_CHECK(key, state) CKeyMgr::GetInstance()->GetKeyState(key) == state
+#define KEY_HOLD(key) KEY_CHECK(key, KEY_STATE::KEY_HOLD)
+#define KEY_TAP(key)  KEY_CHECK(key, KEY_STATE::KEY_TAP)
+#define KEY_AWAY(key) KEY_CHECK(key, KEY_STATE::KEY_AWAY)
+#define KEY_NONE(key) KEY_CHECK(key, KEY_STATE::KEY_NONE)
