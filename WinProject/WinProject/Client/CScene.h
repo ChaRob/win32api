@@ -29,5 +29,6 @@ public:
 	void Update();
 	void FinalUpdate();
 	void Render(HDC _memDC);
+	const vector<CObject*>& GetGroupObject(GROUP_TYPE _type) { return m_arrObj[(UINT)_type]; }
 };
 

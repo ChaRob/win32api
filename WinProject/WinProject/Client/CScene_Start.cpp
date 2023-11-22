@@ -7,6 +7,8 @@
 #include "Player.h"
 #include "Monster.h"
 
+#include "CollisionMgr.h"
+
 CScene_Start::CScene_Start()
 {
 }
@@ -21,7 +23,7 @@ void CScene_Start::Enter()
 	CObject* pObj = new Player;
 	pObj->SetPos(Vector2{ 640.f, 384.f });
 	pObj->SetScale(Vector2{ 100, 100 });
-	AddObject(pObj, GROUP_TYPE::DEFALUT);
+	AddObject(pObj, GROUP_TYPE::PLAYER);
 
 	int monsterCnt = 20;
 	float maxDistance = 25.f;
@@ -39,8 +41,13 @@ void CScene_Start::Enter()
 		mObj->SetCenterPos(mObj->GetPos());
 		AddObject(mObj, GROUP_TYPE::MONSTER);
 	}
+
+	// 충돌 지정
+	// Player 그룹과 Monster 그룹 간의 충돌 체크
+	CollisionMgr::GetInstance()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
 }
 
 void CScene_Start::Exit()
 {
+	CollisionMgr::GetInstance()->DeleteGroup();
 }

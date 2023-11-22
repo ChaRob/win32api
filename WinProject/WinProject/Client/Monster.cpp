@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Monster.h"
 #include "CTimeMgr.h"
+#include "Collider.h"
 
 Monster::Monster() :
 	m_CenterPos(Vector2{ 0.f, 0.f }),
@@ -9,6 +10,7 @@ Monster::Monster() :
 	m_dir(1)
 {
 	CreateCollider();
+	GetCollider()->SetSize(Vector2{ 40.f, 40.f });
 }
 
 Monster::~Monster()

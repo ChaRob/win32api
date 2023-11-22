@@ -4,6 +4,7 @@
 #include "CTimeMgr.h"
 #include "SceneMgr.h"
 #include "PathManager.h"
+#include "CollisionMgr.h"
 
 CCore::CCore():
 	m_hwnd(0),
@@ -22,9 +23,9 @@ CCore::~CCore()
 
 	for (UINT i = 0; i < (UINT)PEN_TYPE::END; i++)
 	{
-		delete m_arrPen[i];
+		DeleteObject(m_arrPen[i]);
+		//delete m_arrPen[i];
 	}
-	//DeleteObject(m_arrPen[])
 }
 
 int CCore::Init(HWND _hwnd, POINT _ptResolution)
@@ -61,6 +62,7 @@ int CCore::Init(HWND _hwnd, POINT _ptResolution)
 	CKeyMgr::GetInstance()->Init();
 	CTimeMgr::GetInstance()->Init();
 	SceneMgr::GetInstance()->Init();
+	CollisionMgr::GetInstance()->Init();
 
 	return S_OK;
 }
@@ -72,6 +74,7 @@ void CCore::Progress()
 	CKeyMgr::GetInstance()->Update();
 
 	SceneMgr::GetInstance()->Update();
+	CollisionMgr::GetInstance()->Update();
 	// Update();
 	// 그리기 작업
 	// 게임 화면이라는 것은 매순간마다 계속 변화하는 과정.

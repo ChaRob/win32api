@@ -14,6 +14,9 @@ private:
 	Vector2 m_offsetPos;	// 오브젝트로부터 상대적인 위치
 	Vector2 m_finalPos;		// FinalUpdate에서 매 프레임마다 계산된 Collider의 위치
 	Vector2 m_size;			// Collider의 크기
+	UINT m_ID;				// Collider가 갖는 고유한 ID 값
+	static UINT m_nextID;	// Collider가 고유한 ID 값을 갖도록 정적변수를 생성
+
 public:
 	void FinalUpdate();
 	void Render(HDC _memDc);

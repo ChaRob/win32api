@@ -4,7 +4,8 @@
 #include "SelectGDI.h"
 
 Collider::Collider() :
-	m_pOwner(0), m_offsetPos{}, m_finalPos{}, m_size{}
+	m_pOwner(0), m_offsetPos{}, m_finalPos{}, m_size{},
+	m_ID(m_nextID++)
 {
 }
 

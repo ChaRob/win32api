@@ -140,6 +140,7 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="CObject.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="CResource.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CScene_Start.h" />
@@ -165,6 +166,7 @@
     <ClCompile Include="CKeyMgr.cpp" />
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="CResource.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CScene_Start.cpp" />

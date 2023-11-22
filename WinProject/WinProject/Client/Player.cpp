@@ -17,7 +17,8 @@ Player::Player()
 	// texture 불러오기
 	m_pTex = ResourceMgr::GetInstance()->LoadTexture(L"PlayerTex", L"texture\\test.bmp");
 	CreateCollider();
-	GetCollider()->SetSize(Vector2{ 100.f, 100.f });
+	GetCollider()->SetOffsetPos(Vector2{ 0.f, 0.f });
+	GetCollider()->SetSize(Vector2{ 50.f, 50.f });
 }
 
 Player::~Player()
