@@ -1,12 +1,28 @@
 #include "pch.h"
 #include "Player.h"
 
+#include "CTexture.h"
+#include "PathManager.h"
+#include "ResourceMgr.h"
 #include "CTimeMgr.h"
 #include "CKeyMgr.h"
 #include "SceneMgr.h"
 #include "CScene.h"
+#include "Collider.h"
 
 #include "Missile.h"
+
+Player::Player()
+{
+	// texture 불러오기
+	m_pTex = ResourceMgr::GetInstance()->LoadTexture(L"PlayerTex", L"texture\\test.bmp");
+	CreateCollider();
+	GetCollider()->SetSize(Vector2{ 100.f, 100.f });
+}
+
+Player::~Player()
+{
+}
 
 void Player::Update()
 {
@@ -31,9 +47,30 @@ void Player::Update()
 	}
 }
 
-//void Player::Render(HDC _memDC)
-//{
-//}
+void Player::Render(HDC _memDC)
+{
+	// 비트맵에 들어가는 값은 항상 양수(unsigned)이지만, 
+	// 실제 좌표값은 음수가 가능하기 때문에
+	// int로 형변환을 해준다.
+	int width = (int)m_pTex->GetBitmapWidth();
+	int height = (int)m_pTex->GetBitmapHeight();
+
+	Vector2 pPos = GetPos();
+
+	/*BitBlt(_memDC,
+		pPos.x - (float)(width / 2.f),
+		pPos.y - (float)(height / 2.f),
+		width, height, m_pTex->GetDC(), 0, 0, SRCCOPY);*/
+
+	TransparentBlt(_memDC,
+		pPos.x - (float)(width / 2.f),
+		pPos.y - (float)(height / 2.f),
+		width, height, m_pTex->GetDC(),
+		0, 0, width, height,
+		RGB(255, 0, 255));
+
+	ComponentRender(_memDC);
+}
 
 void Player::CreateMissile()
 {

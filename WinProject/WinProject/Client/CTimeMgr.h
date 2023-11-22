@@ -16,6 +16,7 @@ private:
 public:
 	void Init();
 	void Update();
+	void render();
 	double GetDeltaTime() { return deltaTime; }
 	float GetDeltaTimef() { return (float)deltaTime; }
 };

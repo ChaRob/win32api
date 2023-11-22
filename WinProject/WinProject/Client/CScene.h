@@ -27,6 +27,7 @@ public:
 
 	// 각 씬에 존재하는 오브젝트들 호출
 	void Update();
+	void FinalUpdate();
 	void Render(HDC _memDC);
 };
 

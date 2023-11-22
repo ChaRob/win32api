@@ -70,6 +70,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)\build\bin\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -133,17 +139,24 @@
     <ClInclude Include="CKeyMgr.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="CObject.h" />
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="CResource.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CScene_Start.h" />
+    <ClInclude Include="CSound.h" />
+    <ClInclude Include="CTexture.h" />
     <ClInclude Include="CTimeMgr.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="PathManager.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceMgr.h" />
     <ClInclude Include="SceneMgr.h" />
+    <ClInclude Include="SelectGDI.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -151,14 +164,21 @@
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CKeyMgr.cpp" />
     <ClCompile Include="CObject.cpp" />
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="CResource.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CScene_Start.cpp" />
+    <ClCompile Include="CSound.cpp" />
+    <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="CTimeMgr.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Missile.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="PathManager.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="ResourceMgr.cpp" />
     <ClCompile Include="SceneMgr.cpp" />
+    <ClCompile Include="SelectGDI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />

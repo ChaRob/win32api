@@ -40,14 +40,21 @@ private:
 	HBITMAP m_hBit;
 	HDC m_memDC;
 
+	HBRUSH m_arrBrush[(UINT)BRUSH_TYPE::END];
+	HPEN m_arrPen[(UINT)PEN_TYPE::END];
+
+private:
+	void Update();
+	void Render();
+	void CreateBrushPen();
+
 public:
 	int Init(HWND _hwnd, POINT _ptResolution);
 	void Progress();
 	HWND GetMainHwnd() { return m_hwnd; }
 	POINT GetResolution() { return m_ptResolution; }
-
-private:
-	void Update();
-	void Render();
+	HDC GetMainDC() { return m_hDC; }
+	const HBRUSH& GetBrush(BRUSH_TYPE _brush) { return m_arrBrush[(UINT)_brush]; }
+	const HPEN& GetPen(PEN_TYPE _pen) { return m_arrPen[(UINT)_pen]; }
 };
 

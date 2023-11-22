@@ -44,6 +44,27 @@
     <Filter Include="Engine\04.Object\Missile">
       <UniqueIdentifier>{7586ca90-649c-46f8-b741-6a5c94ba9728}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\06.Resource">
+      <UniqueIdentifier>{eccadd75-696a-405f-b274-eaecd93575cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\06.Resource\Texture">
+      <UniqueIdentifier>{912ce779-bb45-486b-bc01-80b2c56d6cbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\06.Resource\Sound">
+      <UniqueIdentifier>{e5dfa829-b639-4119-9f92-e913dc0f44d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\PathMgr">
+      <UniqueIdentifier>{851975d0-abf9-4dcc-b58a-a45e7ffff42d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\ResourceMgr">
+      <UniqueIdentifier>{470da656-435c-4353-973a-5fb4beef17ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07.Component">
+      <UniqueIdentifier>{feea8663-86ac-48e6-a88c-9073c2a95304}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08.Module">
+      <UniqueIdentifier>{0a91b1f5-6cea-4b97-aa9b-9d56da80149c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -97,6 +118,25 @@
     <ClInclude Include="Missile.h">
       <Filter>Engine\04.Object\Missile</Filter>
     </ClInclude>
+    <ClInclude Include="CResource.h">
+      <Filter>Engine\06.Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="CTexture.h">
+      <Filter>Engine\06.Resource\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="CSound.h">
+      <Filter>Engine\06.Resource\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="PathManager.h">
+      <Filter>Engine\03.Manager\PathMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceMgr.h">
+      <Filter>Engine\03.Manager\ResourceMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Engine\07.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectGDI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -130,6 +170,25 @@
     <ClCompile Include="Missile.cpp">
       <Filter>Engine\04.Object\Missile</Filter>
     </ClCompile>
+    <ClCompile Include="CResource.cpp">
+      <Filter>Engine\06.Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="CTexture.cpp">
+      <Filter>Engine\06.Resource\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="CSound.cpp">
+      <Filter>Engine\06.Resource\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="PathManager.cpp">
+      <Filter>Engine\03.Manager\PathMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceMgr.cpp">
+      <Filter>Engine\03.Manager\ResourceMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Engine\07.Component</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectGDI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">

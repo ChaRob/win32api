@@ -20,7 +20,10 @@ void CTimeMgr::Update()
 	// 프레임 간격당 생겨난 count 차이값을 구함
 	deltaTime = (double)(m_llCurCounter.QuadPart - m_llPrevCounter.QuadPart) / (double)m_llFrequency.QuadPart;
 	m_llPrevCounter = m_llCurCounter;
+}
 
+void CTimeMgr::render()
+{
 	m_callcount++;
 	timeAcc += deltaTime;
 	if (timeAcc >= 1.0) {
@@ -29,7 +32,7 @@ void CTimeMgr::Update()
 		timeAcc = 0;
 
 		wchar_t szBuffer[255] = {};
-		
+
 		swprintf_s(szBuffer, L"FPS : %d, DT : %f", m_FPS, deltaTime);
 		SetWindowText(CCore::GetInstance()->GetMainHwnd(), szBuffer);
 	}

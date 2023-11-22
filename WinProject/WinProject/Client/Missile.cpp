@@ -5,6 +5,7 @@
 Missile::Missile() : m_dir(Vector2{0.f, 1.f})
 {
 	m_dir.Normalize();
+	CreateCollider();
 }
 
 Missile::~Missile()

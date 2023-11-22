@@ -3,18 +3,28 @@
 #include "CKeyMgr.h"
 #include "CTimeMgr.h"
 #include "SceneMgr.h"
+#include "PathManager.h"
 
 CCore::CCore():
 	m_hwnd(0),
 	m_ptResolution{},
 	m_hDC(0),
 	m_hBit(0),
-	m_memDC(0) {}
+	m_memDC(0),
+	m_arrBrush{},
+	m_arrPen{}
+{}
 CCore::~CCore()
 {
 	ReleaseDC(m_hwnd, m_hDC);
 	DeleteDC(m_memDC);
 	DeleteObject(m_hBit);
+
+	for (UINT i = 0; i < (UINT)PEN_TYPE::END; i++)
+	{
+		delete m_arrPen[i];
+	}
+	//DeleteObject(m_arrPen[])
 }
 
 int CCore::Init(HWND _hwnd, POINT _ptResolution)
@@ -43,7 +53,11 @@ int CCore::Init(HWND _hwnd, POINT _ptResolution)
 	HBITMAP hOldBit = (HBITMAP)SelectObject(m_memDC, m_hBit);
 	DeleteObject(hOldBit);
 
+	// 자주 사용할 브러쉬와 펜을 등록
+	CreateBrushPen();
+
 	// Manager 초기화
+	PathManager::GetInstance()->Init();
 	CKeyMgr::GetInstance()->Init();
 	CTimeMgr::GetInstance()->Init();
 	SceneMgr::GetInstance()->Init();
@@ -72,6 +86,20 @@ void CCore::Progress()
 	// 다른 화면에서 그린 그림을 복사해서 그려준다.
 	// 이 프로젝트(WinAPI)에서는 CPU가 rendering을 담당하지만, DirectX를 사용해서 GPU에게 이 일을 맡기면 속도를 더 늘릴 수 있다.
 	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_memDC, 0, 0, SRCCOPY);
+
+	// CTimeMgr::GetInstance()->render();
+}
+
+void CCore::CreateBrushPen()
+{
+	// Brush
+	m_arrBrush[(UINT)BRUSH_TYPE::HOLLOW] = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
+
+
+	// Pen
+	m_arrPen[(UINT)PEN_TYPE::RED] = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
+	m_arrPen[(UINT)PEN_TYPE::GREEN] = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
+	m_arrPen[(UINT)PEN_TYPE::BLUE] = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

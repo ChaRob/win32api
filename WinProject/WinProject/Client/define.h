@@ -47,3 +47,16 @@ enum class SCENE_TYPE
 #define KEY_TAP(key)  KEY_CHECK(key, KEY_STATE::KEY_TAP)
 #define KEY_AWAY(key) KEY_CHECK(key, KEY_STATE::KEY_AWAY)
 #define KEY_NONE(key) KEY_CHECK(key, KEY_STATE::KEY_NONE)
+
+enum class BRUSH_TYPE {
+
+	HOLLOW,
+	END
+};
+
+enum class PEN_TYPE {
+	RED,
+	GREEN,
+	BLUE,
+	END
+};

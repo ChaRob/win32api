@@ -13,6 +13,18 @@ public:
 		x = (float)_pt.x;
 		y = (float)_pt.y;
 	}
+	Vector2 operator+(const POINT _pt) {
+		return Vector2(x + (float)_pt.x, y + (float)_pt.y);
+	}
+	Vector2 operator+(const Vector2& _pt) {
+		return Vector2(x + (float)_pt.x, y + (float)_pt.y);
+	}
+	Vector2 operator-(const POINT _pt) {
+		return Vector2(x - (float)_pt.x, y - (float)_pt.y);
+	}
+	Vector2 operator-(const Vector2& _pt) {
+		return Vector2(x - (float)_pt.x, y - (float)_pt.y);
+	}
 	float Length() { return sqrt(x * x + y * y); }
 	Vector2& Normalize() {
 		float length = Length();

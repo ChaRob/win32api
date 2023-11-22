@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CScene_Start.h"
 
+#include "CTexture.h"
+#include "PathManager.h"
 #include "CObject.h"
 #include "Player.h"
 #include "Monster.h"

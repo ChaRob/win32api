@@ -28,7 +28,7 @@ void SceneMgr::Init()
 void SceneMgr::Update()
 {
 	m_pCurScene->Update();
-
+	m_pCurScene->FinalUpdate();
 }
 
 void SceneMgr::Render(HDC _memDC)

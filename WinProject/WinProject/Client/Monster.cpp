@@ -8,6 +8,7 @@ Monster::Monster() :
 	m_MaxDistance(50.f),
 	m_dir(1)
 {
+	CreateCollider();
 }
 
 Monster::~Monster()

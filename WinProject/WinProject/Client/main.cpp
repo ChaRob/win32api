@@ -25,6 +25,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance /* 실행 된 프로세스의 시
     _In_ LPWSTR    lpCmdLine /* 프로그램 시작시 문자열을 입력하면 들어온다. */,
     _In_ int       nCmdShow)
 {
+    // 메모리 릭(누수) 체크
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    // _CrtSetBreakAlloc(); // 문제가 생겼을 때 문제 해당 지점에 중단점을 걸어줌
+
     // 쓰이지 않는 변수 => 참조되지 않는 변수
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
