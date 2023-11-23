@@ -26,8 +26,9 @@ enum class GROUP_TYPE
 {
 	DEFALUT,
 	PLAYER,
-	MISSILE,
 	MONSTER,
+	PLAYER_MISSILE,
+	MONSTER_MISSILE,
 
 	END,
 };
@@ -58,5 +59,13 @@ enum class PEN_TYPE {
 	RED,
 	GREEN,
 	BLUE,
+	END
+};
+
+enum class EVENT_TYPE {
+	CREATE_OBJECT,
+	DELETE_OBJECT,
+	SCENE_CHANGE,
+
 	END
 };

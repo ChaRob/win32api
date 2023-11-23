@@ -15,5 +15,6 @@ using std::make_pair;
 
 #include "struct.h"
 #include "define.h"
+#include "func.h"
 #include "CCore.h"
 #include "CObject.h"

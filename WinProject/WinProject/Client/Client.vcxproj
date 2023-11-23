@@ -148,7 +148,9 @@
     <ClInclude Include="CTexture.h" />
     <ClInclude Include="CTimeMgr.h" />
     <ClInclude Include="define.h" />
+    <ClInclude Include="EventMgr.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="func.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="PathManager.h" />
@@ -157,6 +159,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceMgr.h" />
     <ClInclude Include="SceneMgr.h" />
+    <ClInclude Include="SceneTool.h" />
     <ClInclude Include="SelectGDI.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="targetver.h" />
@@ -173,6 +176,8 @@
     <ClCompile Include="CSound.cpp" />
     <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="CTimeMgr.cpp" />
+    <ClCompile Include="EventMgr.cpp" />
+    <ClCompile Include="func.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Missile.cpp" />
     <ClCompile Include="Monster.cpp" />
@@ -180,6 +185,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResourceMgr.cpp" />
     <ClCompile Include="SceneMgr.cpp" />
+    <ClCompile Include="SceneTool.cpp" />
     <ClCompile Include="SelectGDI.cpp" />
   </ItemGroup>
   <ItemGroup>

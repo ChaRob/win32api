@@ -5,6 +5,7 @@
 #include "SceneMgr.h"
 #include "PathManager.h"
 #include "CollisionMgr.h"
+#include "EventMgr.h"
 
 CCore::CCore():
 	m_hwnd(0),
@@ -63,6 +64,7 @@ int CCore::Init(HWND _hwnd, POINT _ptResolution)
 	CTimeMgr::GetInstance()->Init();
 	SceneMgr::GetInstance()->Init();
 	CollisionMgr::GetInstance()->Init();
+	EventMgr::GetInstance()->Init();
 
 	return S_OK;
 }
@@ -90,7 +92,10 @@ void CCore::Progress()
 	// 이 프로젝트(WinAPI)에서는 CPU가 rendering을 담당하지만, DirectX를 사용해서 GPU에게 이 일을 맡기면 속도를 더 늘릴 수 있다.
 	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_memDC, 0, 0, SRCCOPY);
 
-	// CTimeMgr::GetInstance()->render();
+	CTimeMgr::GetInstance()->render();
+
+	// 발생한 이벤트를 지연 처리한다.
+	EventMgr::GetInstance()->Update();
 }
 
 void CCore::CreateBrushPen()

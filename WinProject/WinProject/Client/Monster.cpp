@@ -29,3 +29,19 @@ void Monster::Update()
 
 	SetPos(curPos);
 }
+
+void Monster::OnCollision(Collider* _pOther)
+{
+}
+
+void Monster::OnCollisionEnter(Collider* _pOther)
+{
+	CObject* pOtherObj = _pOther->GetOwnerObject();
+	if (pOtherObj->GetName() == L"PlayerMissle") {
+		DeleteObejct(this);
+	}
+}
+
+void Monster::OnCollisionExit(Collider* _pOther)
+{
+}

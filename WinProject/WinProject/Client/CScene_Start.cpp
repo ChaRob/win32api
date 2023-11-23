@@ -8,6 +8,8 @@
 #include "Monster.h"
 
 #include "CollisionMgr.h"
+#include "CKeyMgr.h"
+#include "SceneMgr.h"
 
 CScene_Start::CScene_Start()
 {
@@ -15,6 +17,14 @@ CScene_Start::CScene_Start()
 
 CScene_Start::~CScene_Start()
 {
+}
+
+void CScene_Start::Update()
+{
+	CScene::Update();
+	if (KEY_TAP(KEY::ENTER)) {
+		ChangeScene(SCENE_TYPE::TOOL);
+	}
 }
 
 void CScene_Start::Enter()
@@ -25,7 +35,7 @@ void CScene_Start::Enter()
 	pObj->SetScale(Vector2{ 100, 100 });
 	AddObject(pObj, GROUP_TYPE::PLAYER);
 
-	int monsterCnt = 20;
+	int monsterCnt = 5;
 	float maxDistance = 25.f;
 	float scale = 50.f;
 	Vector2 vResolution = CCore::GetInstance()->GetResolution();
@@ -39,15 +49,19 @@ void CScene_Start::Enter()
 		mObj->SetPos(Vector2{ maxDistance + scale / 2.f + fTerm * i, 100.f });
 		mObj->SetScale(Vector2{ scale, scale });
 		mObj->SetCenterPos(mObj->GetPos());
+		mObj->SetName(L"Monster");
 		AddObject(mObj, GROUP_TYPE::MONSTER);
 	}
 
 	// 충돌 지정
 	// Player 그룹과 Monster 그룹 간의 충돌 체크
 	CollisionMgr::GetInstance()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
+	CollisionMgr::GetInstance()->CheckGroup(GROUP_TYPE::PLAYER_MISSILE, GROUP_TYPE::MONSTER);
 }
 
 void CScene_Start::Exit()
 {
+	DeleteGroupAll();
+
 	CollisionMgr::GetInstance()->DeleteGroup();
 }

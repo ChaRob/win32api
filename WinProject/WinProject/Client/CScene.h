@@ -26,9 +26,11 @@ public:
 	virtual void Exit() = 0; // 해당 Scene에 탈출시 호출
 
 	// 각 씬에 존재하는 오브젝트들 호출
-	void Update();
-	void FinalUpdate();
-	void Render(HDC _memDC);
+	virtual void Update();
+	virtual void FinalUpdate();
+	virtual void Render(HDC _memDC);
 	const vector<CObject*>& GetGroupObject(GROUP_TYPE _type) { return m_arrObj[(UINT)_type]; }
+	void DeleteGroup(GROUP_TYPE _group);
+	void DeleteGroupAll();
 };
 

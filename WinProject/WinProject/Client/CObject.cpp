@@ -3,7 +3,8 @@
 #include "Collider.h"
 
 CObject::CObject() :
-	m_pos{}, m_size{}, m_pCollider(nullptr)
+	m_pos{}, m_size{}, m_pCollider(nullptr),
+	m_strName(L""), m_bAlive(true)
 {
 }
 
@@ -35,6 +36,21 @@ void CObject::Render(HDC _memDC)
 		(int)(m_pos.y + m_size.y / 2.f));
 
 	ComponentRender(_memDC);
+}
+
+void CObject::OnCollision(Collider* _pOther)
+{
+
+}
+
+void CObject::OnCollisionEnter(Collider* _pOther)
+{
+
+}
+
+void CObject::OnCollisionExit(Collider* _pOther)
+{
+
 }
 
 void CObject::CreateCollider()

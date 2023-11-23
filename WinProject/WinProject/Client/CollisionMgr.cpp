@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CollisionMgr.h"
+#include "Collider.h"
 #include "SceneMgr.h"
 #include "CScene.h"
 
@@ -67,6 +68,9 @@ void CollisionMgr::CollisionUpdateGroup(UINT _row, UINT _col)
 	const vector<CObject*>& r = pCurScene->GetGroupObject((GROUP_TYPE)_row);
 	const vector<CObject*>& c = pCurScene->GetGroupObject((GROUP_TYPE)_col);
 
+	// ID 값을 찾기 위한 iterator
+	map<ULONGLONG, bool>::iterator iter;
+
 	for (UINT i = 0; i < r.size(); i++)
 	{
 		if (r[i]->GetCollider() == nullptr)
@@ -77,8 +81,56 @@ void CollisionMgr::CollisionUpdateGroup(UINT _row, UINT _col)
 			if (c[j]->GetCollider() == nullptr || r[i] == c[j])
 				continue;
 
-			if (IsCollisionOccur(r[i]->GetCollider(), c[j]->GetCollider())) {
+			// 충돌함!
+			Collider* pRowCol = r[i]->GetCollider();
+			Collider* pColCol = c[j]->GetCollider();
 
+			// 두 collider의 ID 데이터 조합 생성
+			ColliderID ID;
+			ID.leftID = pRowCol->GetID();
+			ID.rightID = pColCol->GetID();
+
+			iter = m_mapColInfo.find(ID.ID);
+			if (iter == m_mapColInfo.end()) {
+				m_mapColInfo.insert(make_pair(ID.ID, false));
+				iter = m_mapColInfo.find(ID.ID);
+			}
+
+			// 충돌판정 부여 및 이벤트 부여
+			if (IsCollisionOccur(pRowCol, pColCol)) {
+				// 현재 충돌 중
+				if (iter->second == true) {
+					// 이전에도 충돌했던 적이 있음 => 계속 충돌중
+
+					if (r[i]->IsDead() || c[j]->IsDead()) {
+						// 근데 둘 중 하나라도 삭제될 오브젝트라면 충돌 해제
+						pRowCol->OnCollisionExit(pColCol);
+						pColCol->OnCollisionExit(pRowCol);
+						iter->second = false;
+					}
+					else {
+						pRowCol->OnCollision(pColCol);
+						pColCol->OnCollision(pRowCol);
+					}
+				}
+				else {
+					// 이전에는 충돌하지 않았음 => 방금 충돌 함.
+					if (!r[i]->IsDead() && !c[j]->IsDead()) {
+						// 둘 다 삭제될 오브젝트가 아니라면 작동
+						pRowCol->OnCollisionEnter(pColCol);
+						pColCol->OnCollisionEnter(pRowCol);
+						iter->second = true;
+					}
+				}
+			}
+			else {
+				// 현재 충돌하지 않음
+				if (iter->second == true) {
+					// 이전에 충돌했던 적이 있음 => 방금 떨어짐
+					pRowCol->OnCollisionExit(pColCol);
+					pColCol->OnCollisionExit(pRowCol);
+				}
+				iter->second = false;
 			}
 		}
 	}
@@ -86,6 +138,17 @@ void CollisionMgr::CollisionUpdateGroup(UINT _row, UINT _col)
 
 bool CollisionMgr::IsCollisionOccur(Collider* _pColLeft, Collider* _pColRight)
 {
+	Vector2 pLeftPos = _pColLeft->GetFinalPos();
+	Vector2 pLeftSize = _pColLeft->GetSize();
 	
+	Vector2 pRightPos =  _pColRight->GetFinalPos();
+	Vector2 pRightSize = _pColRight->GetSize();
+
+	if (abs(pLeftPos.x - pRightPos.x) < (pLeftSize.x + pRightSize.x) / 2.f &&
+		abs(pLeftPos.y - pRightPos.y) < (pLeftSize.y + pRightSize.y) / 2.f)
+	{
+		return true;
+	}
+
 	return false;
 }

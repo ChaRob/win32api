@@ -19,5 +19,9 @@ public:
 	void SetSpeed(float _speed) { m_fSpeed = _speed; }
 	void SetCenterPos(Vector2 _vPos) { m_CenterPos = _vPos; }
 	void SetMaxDistance(float _dis) { m_MaxDistance = _dis; }
+
+	virtual void OnCollision(Collider* _pOther);
+	virtual void OnCollisionEnter(Collider* _pOther);
+	virtual void OnCollisionExit(Collider* _pOther);
 };
 

@@ -20,6 +20,11 @@ void CTimeMgr::Update()
 	// 프레임 간격당 생겨난 count 차이값을 구함
 	deltaTime = (double)(m_llCurCounter.QuadPart - m_llPrevCounter.QuadPart) / (double)m_llFrequency.QuadPart;
 	m_llPrevCounter = m_llCurCounter;
+
+#ifdef _DEBUG
+	if (deltaTime > 1.0 / 60.0)
+		deltaTime = 1.0 / 60.0;
+#endif // DEBUG
 }
 
 void CTimeMgr::render()

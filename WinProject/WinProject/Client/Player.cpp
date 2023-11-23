@@ -30,16 +30,16 @@ void Player::Update()
 	Vector2 vPos = GetPos();
 
 	if (KEY_HOLD(KEY::W)) {
-		vPos.y -= 200.f * DeltaTime;
+		vPos.y -= 200.f * DeltaTimef;
 	}
 	if (KEY_HOLD(KEY::S)) {
-		vPos.y += 200.f * DeltaTime;
+		vPos.y += 200.f * DeltaTimef;
 	}
 	if (KEY_HOLD(KEY::A)) {
-		vPos.x -= 200.f * DeltaTime;
+		vPos.x -= 200.f * DeltaTimef;
 	}
 	if (KEY_HOLD(KEY::D)) {
-		vPos.x += 200.f * DeltaTime;
+		vPos.x += 200.f * DeltaTimef;
 	}
 	SetPos(vPos);
 
@@ -64,8 +64,8 @@ void Player::Render(HDC _memDC)
 		width, height, m_pTex->GetDC(), 0, 0, SRCCOPY);*/
 
 	TransparentBlt(_memDC,
-		pPos.x - (float)(width / 2.f),
-		pPos.y - (float)(height / 2.f),
+		(int)(pPos.x - (float)(width / 2.f)),
+		(int)(pPos.y - (float)(height / 2.f)),
 		width, height, m_pTex->GetDC(),
 		0, 0, width, height,
 		RGB(255, 0, 255));
@@ -82,7 +82,10 @@ void Player::CreateMissile()
 	pMissile->SetPos(missilePos);
 	pMissile->SetScale(Vector2{ 25.f, 25.f });
 	pMissile->SetDir(Vector2{0.f, 1.f});
+	pMissile->SetName(L"PlayerMissle");
 
-	CScene* pCurScene = SceneMgr::GetInstance()->GetCurScene();
-	pCurScene->AddObject(pMissile, GROUP_TYPE::MISSILE);
+	//CScene* pCurScene = SceneMgr::GetInstance()->GetCurScene();
+	//pCurScene->AddObject(pMissile, GROUP_TYPE::MISSILE);
+
+	CreateObject(pMissile, GROUP_TYPE::PLAYER_MISSILE);
 }

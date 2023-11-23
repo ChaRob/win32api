@@ -1,11 +1,13 @@
 #include "pch.h"
 #include "Missile.h"
 #include "CTimeMgr.h"
+#include "Collider.h"
 
 Missile::Missile() : m_dir(Vector2{0.f, 1.f})
 {
 	m_dir.Normalize();
 	CreateCollider();
+	GetCollider()->SetSize(Vector2{ 10.f,10.f });
 }
 
 Missile::~Missile()
@@ -33,4 +35,14 @@ void Missile::Render(HDC _memDC)
 		(int)(vPos.y - scale.y / 2.f),
 		(int)(vPos.x + scale.x / 2.f),
 		(int)(vPos.y + scale.y / 2.f));
+
+	ComponentRender(_memDC);
+}
+
+void Missile::OnCollisionEnter(Collider* _pOther)
+{
+	CObject* pOtherObj = _pOther->GetOwnerObject();
+	if (pOtherObj->GetName() == L"Monster") {
+		DeleteObejct(this);
+	}
 }

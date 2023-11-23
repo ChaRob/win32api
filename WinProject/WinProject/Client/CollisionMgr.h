@@ -1,4 +1,13 @@
 #pragma once
+
+union ColliderID {
+	struct {
+		UINT leftID;
+		UINT rightID;
+	};
+	ULONGLONG ID;
+};
+
 class CollisionMgr
 {
 	SINGLE(CollisionMgr);
@@ -7,7 +16,7 @@ private:
 	// 그룹간의 충돌체크 매트릭스
 	UINT m_arrCheck[(UINT)GROUP_TYPE::END];
 	// Collider간의 이전 프레임 충돌 정보
-	
+	map<ULONGLONG, bool> m_mapColInfo;
 
 public:
 	void Init();

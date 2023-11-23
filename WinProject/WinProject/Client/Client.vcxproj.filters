@@ -65,6 +65,18 @@
     <Filter Include="Engine\08.Module">
       <UniqueIdentifier>{0a91b1f5-6cea-4b97-aa9b-9d56da80149c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\08.Module\SelectGDI">
+      <UniqueIdentifier>{e689823d-8365-4c20-a557-97ca31ab8298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\CollisionMgr">
+      <UniqueIdentifier>{f7528938-6d78-48e5-9ed4-8650c878bc0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\EventMgr">
+      <UniqueIdentifier>{c0358c00-4dee-457a-8ffa-d99ce38b8931}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\05.Scene\SceneTool">
+      <UniqueIdentifier>{8a9ac1f3-e9fd-4ae2-8fa4-95e72cdd8ffc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -136,7 +148,21 @@
     <ClInclude Include="Collider.h">
       <Filter>Engine\07.Component</Filter>
     </ClInclude>
-    <ClInclude Include="SelectGDI.h" />
+    <ClInclude Include="SelectGDI.h">
+      <Filter>Engine\08.Module\SelectGDI</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionMgr.h">
+      <Filter>Engine\03.Manager\CollisionMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="EventMgr.h">
+      <Filter>Engine\03.Manager\EventMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="func.h">
+      <Filter>Engine\01.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneTool.h">
+      <Filter>Engine\05.Scene\SceneTool</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -188,7 +214,21 @@
     <ClCompile Include="Collider.cpp">
       <Filter>Engine\07.Component</Filter>
     </ClCompile>
-    <ClCompile Include="SelectGDI.cpp" />
+    <ClCompile Include="SelectGDI.cpp">
+      <Filter>Engine\08.Module\SelectGDI</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionMgr.cpp">
+      <Filter>Engine\03.Manager\CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="EventMgr.cpp">
+      <Filter>Engine\03.Manager\EventMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="func.cpp">
+      <Filter>Engine\01.Header</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneTool.cpp">
+      <Filter>Engine\05.Scene\SceneTool</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
