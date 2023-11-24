@@ -39,7 +39,6 @@ CObject::~CObject()
 
 void CObject::Update()
 {
-	
 }
 
 void CObject::FinalUpdate()
@@ -89,7 +88,6 @@ void CObject::ComponentRender(HDC _memDC)
 
 	if (m_animator != nullptr) {
 		m_animator->Render(_memDC);
-		m_animator->Update();
 	}
 }
 

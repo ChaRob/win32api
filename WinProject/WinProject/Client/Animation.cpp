@@ -6,7 +6,8 @@
 
 Animation::Animation() :
 	m_animName(L""), m_pAnimator(nullptr),
-	m_pTex(nullptr), m_vecFram{}, m_CurFrame(0)
+	m_pTex(nullptr), m_vecFram{}, m_CurFrame(0),
+	m_tACC(0.f), m_isFinish(false)
 {
 }
 
@@ -16,20 +17,25 @@ Animation::~Animation()
 
 void Animation::Update()
 {
+	if (m_isFinish) return;
+
 	m_tACC += DeltaTimef;
 	if (m_tACC > m_vecFram[m_CurFrame].duration) {
+		m_tACC -= m_vecFram[m_CurFrame].duration;
 		m_CurFrame++;
-		m_tACC = 0;
 		if (m_CurFrame >= m_vecFram.size()) {
-			m_CurFrame = 0;
+			m_CurFrame = -1;
+			m_isFinish = true;
 		}
 	}
 }
 
 void Animation::Render(HDC _dc)
 {
+	if (m_isFinish) return;
+
 	CObject* pObj = m_pAnimator->GetOwnerObject();
-	Vector2 pPos = pObj->GetPos();
+	Vector2 pPos = pObj->GetPos() + m_vecFram[m_CurFrame].offset;
 
 	TransparentBlt(_dc,
 		(int)(pPos.x - m_vecFram[m_CurFrame].vSlice.x / 2.f),

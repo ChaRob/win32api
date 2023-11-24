@@ -12,6 +12,7 @@
 
 #include "Missile.h"
 #include "Animator.h"
+#include "Animation.h"
 
 Player::Player()
 {
@@ -25,7 +26,13 @@ Player::Player()
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"Walk_down", m_pTex, Vector2{0.f, 260.f}, Vector2{60.f, 65.f}, Vector2{60.f,0.f}, 0.1f, 10);
 
-	GetAnimator()->Play(L"Walk_down");
+	GetAnimator()->Play(L"Walk_down", true);
+
+	Animation* pAnim = GetAnimator()->FindAnimation(L"Walk_down");
+	for (int i = 0; i < pAnim->GetMaxFrame(); i++)
+	{
+		pAnim->GetFrame(i).offset = Vector2{ 0.f, -20.f };
+	}
 }
 
 Player::~Player()
@@ -53,6 +60,10 @@ void Player::Update()
 	if (KEY_TAP(KEY::SPACE)) {
 		CreateMissile();
 	}
+	
+	if (GetAnimator() != nullptr) {
+		GetAnimator()->Update();
+	}
 }
 
 void Player::Render(HDC _memDC)
@@ -77,6 +88,7 @@ void Player::Render(HDC _memDC)
 		0, 0, width, height,
 		RGB(255, 0, 255));*/
 
+	// 애니메이션에 의해 렌더링해주기
 	ComponentRender(_memDC);
 }
 

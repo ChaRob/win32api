@@ -3,7 +3,8 @@
 #include "Animation.h"
 
 Animator::Animator():
-	m_pOwner(nullptr), m_mapAnim{}, m_pCurAnim(nullptr)
+	m_pOwner(nullptr), m_mapAnim{}, m_pCurAnim(nullptr),
+	m_repeat(false)
 {
 }
 
@@ -16,6 +17,10 @@ void Animator::Update()
 {
 	if (m_pCurAnim != nullptr) {
 		m_pCurAnim->Update();
+
+		if (m_repeat && m_pCurAnim->IsFinish()) {
+			m_pCurAnim->SetFrame(0);
+		}
 	}
 }
 
@@ -49,9 +54,9 @@ Animation* Animator::FindAnimation(const wstring& _animName)
 	return nullptr;
 }
 
-void Animator::Play(const wstring& _animName)
+void Animator::Play(const wstring& _animName, bool _repeat)
 {
 	m_pCurAnim = FindAnimation(_animName);
 	//assert(m_pCurAnim == nullptr);
-
+	m_repeat = _repeat;
 }
