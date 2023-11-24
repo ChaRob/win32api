@@ -11,14 +11,21 @@
 #include "Collider.h"
 
 #include "Missile.h"
+#include "Animator.h"
 
 Player::Player()
 {
-	// texture 불러오기
-	m_pTex = ResourceMgr::GetInstance()->LoadTexture(L"PlayerTex", L"texture\\test.bmp");
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vector2{ 0.f, 0.f });
 	GetCollider()->SetSize(Vector2{ 50.f, 50.f });
+
+	// texture 불러오기
+	// m_pTex = ResourceMgr::GetInstance()->LoadTexture(L"PlayerTex", L"texture\\test.bmp");
+	CTexture* m_pTex = ResourceMgr::GetInstance()->LoadTexture(L"PlayerTex", L"texture\\zelda.bmp");
+	CreateAnimator();
+	GetAnimator()->CreateAnimation(L"Walk_down", m_pTex, Vector2{0.f, 260.f}, Vector2{60.f, 65.f}, Vector2{60.f,0.f}, 0.1f, 10);
+
+	GetAnimator()->Play(L"Walk_down");
 }
 
 Player::~Player()
@@ -53,22 +60,22 @@ void Player::Render(HDC _memDC)
 	// 비트맵에 들어가는 값은 항상 양수(unsigned)이지만, 
 	// 실제 좌표값은 음수가 가능하기 때문에
 	// int로 형변환을 해준다.
-	int width = (int)m_pTex->GetBitmapWidth();
+	/*int width = (int)m_pTex->GetBitmapWidth();
 	int height = (int)m_pTex->GetBitmapHeight();
 
-	Vector2 pPos = GetPos();
+	Vector2 pPos = GetPos();*/
 
 	/*BitBlt(_memDC,
 		pPos.x - (float)(width / 2.f),
 		pPos.y - (float)(height / 2.f),
 		width, height, m_pTex->GetDC(), 0, 0, SRCCOPY);*/
 
-	TransparentBlt(_memDC,
+	/*TransparentBlt(_memDC,
 		(int)(pPos.x - (float)(width / 2.f)),
 		(int)(pPos.y - (float)(height / 2.f)),
 		width, height, m_pTex->GetDC(),
 		0, 0, width, height,
-		RGB(255, 0, 255));
+		RGB(255, 0, 255));*/
 
 	ComponentRender(_memDC);
 }

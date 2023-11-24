@@ -5,7 +5,7 @@ class CTexture :
 {
 private:
     CTexture();
-    ~CTexture();
+    virtual ~CTexture();
     friend class ResourceMgr;
 
 private:

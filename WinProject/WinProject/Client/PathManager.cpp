@@ -18,8 +18,8 @@ void PathManager::Init()
 	
 	// 상위폴더로 나가서 경로 지정
 	/* ../bin\\contents\\ */
-	int pathLength = wcslen(m_szContentPath);
-	for (int i = pathLength - 1; i >= 0; i--)
+	size_t pathLength = wcslen(m_szContentPath);
+	for (size_t i = pathLength - 1; i >= 0; i--)
 	{
 		// 경로중 \\를 만나면 null 문자를 넣어 해당 경로까지로 절대경로를 뽑는다.
 		if (m_szContentPath[i] == '\\')

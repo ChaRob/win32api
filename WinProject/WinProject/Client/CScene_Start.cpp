@@ -35,6 +35,11 @@ void CScene_Start::Enter()
 	pObj->SetScale(Vector2{ 100, 100 });
 	AddObject(pObj, GROUP_TYPE::PLAYER);
 
+	//// player บนป็
+	//CObject* newPObj = pObj->Clone();
+	//newPObj->SetPos(Vector2{ 740.f, 384.f });
+	//AddObject(newPObj, GROUP_TYPE::PLAYER);
+
 	int monsterCnt = 5;
 	float maxDistance = 25.f;
 	float scale = 50.f;

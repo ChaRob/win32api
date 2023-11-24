@@ -2,17 +2,14 @@
 #include "ResourceMgr.h"
 
 #include "PathManager.h"
+#include "CResource.h"
 #include "CTexture.h"
 
 ResourceMgr::ResourceMgr() {}
 
 ResourceMgr::~ResourceMgr()
 {
-    map<wstring, CTexture*>::iterator iter = m_mapTexture.begin();
-    for (; iter != m_mapTexture.end(); iter++)
-    {
-        delete iter->second;
-    }
+    SafeDeleteMap(m_mapTexture);
 }
 
 CTexture* ResourceMgr::LoadTexture(const wstring& _strKey, const wstring& _strRelativePath)
@@ -37,9 +34,9 @@ CTexture* ResourceMgr::LoadTexture(const wstring& _strKey, const wstring& _strRe
 
 CTexture* ResourceMgr::FindTexture(const wstring& _strKey)
 {
-    map<wstring, CTexture*>::iterator iter = m_mapTexture.find(_strKey);
+    map<wstring, CResource*>::iterator iter = m_mapTexture.find(_strKey);
     if (iter == m_mapTexture.end()) {
         return nullptr;
     }
-    return iter->second;
+    return (CTexture*)iter->second;
 }

@@ -25,6 +25,18 @@ public:
 	Vector2 operator-(const Vector2& _pt) {
 		return Vector2(x - (float)_pt.x, y - (float)_pt.y);
 	}
+	Vector2 operator*(const POINT& _pt) {
+		return Vector2(x * (float)_pt.x, y * (float)_pt.y);
+	}
+	Vector2 operator*(const Vector2& _pt) {
+		return Vector2(x * (float)_pt.x, y * (float)_pt.y);
+	}
+	Vector2 operator*(const int _pt) {
+		return Vector2(x * _pt, y * _pt);
+	}
+	Vector2 operator*(const float _pt) {
+		return Vector2(x * _pt, y * _pt);
+	}
 	float Length() { return sqrtf(x * x + y * y); }
 	Vector2& Normalize() {
 		float length = Length();

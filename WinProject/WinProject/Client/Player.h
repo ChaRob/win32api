@@ -8,6 +8,7 @@ class Player : public CObject
 public:
 	Player();
 	~Player();
+	Player* Clone() { return new Player(*this); }
 
 public:
 	virtual void Update();
@@ -15,6 +16,5 @@ public:
 
 private:
 	void CreateMissile();
-	CTexture* m_pTex;
 };
 

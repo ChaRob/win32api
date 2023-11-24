@@ -6,6 +6,8 @@ class Monster : public CObject
 public:
 	Monster();
 	~Monster();
+	virtual void Update();
+	Monster* Clone() { return new Monster(*this); }
 
 private:
 	float m_fSpeed;
@@ -14,7 +16,6 @@ private:
 	int m_dir;
 
 public:
-	virtual void Update();
 	float GetSpeed() { return m_fSpeed; }
 	void SetSpeed(float _speed) { m_fSpeed = _speed; }
 	void SetCenterPos(Vector2 _vPos) { m_CenterPos = _vPos; }
