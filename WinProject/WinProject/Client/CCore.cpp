@@ -6,6 +6,7 @@
 #include "PathManager.h"
 #include "CollisionMgr.h"
 #include "EventMgr.h"
+#include "Camera.h"
 
 CCore::CCore():
 	m_hwnd(0),
@@ -96,6 +97,9 @@ void CCore::Progress()
 
 	// 발생한 이벤트를 지연 처리한다.
 	EventMgr::GetInstance()->Update();
+
+	// 카메라 움직임 처리한다.
+	Camera::GetInstance()->Update();
 }
 
 void CCore::CreateBrushPen()

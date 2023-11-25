@@ -3,6 +3,7 @@
 #include "Animator.h"
 #include "CObject.h"
 #include "CTimeMgr.h"
+#include "Camera.h"
 
 Animation::Animation() :
 	m_animName(L""), m_pAnimator(nullptr),
@@ -36,6 +37,9 @@ void Animation::Render(HDC _dc)
 
 	CObject* pObj = m_pAnimator->GetOwnerObject();
 	Vector2 pPos = pObj->GetPos() + m_vecFram[m_CurFrame].offset;
+
+	// 렌더링 좌표로 변환(카메라)
+	pPos = Camera::GetInstance()->GetRenderPos(pPos);
 
 	TransparentBlt(_dc,
 		(int)(pPos.x - m_vecFram[m_CurFrame].vSlice.x / 2.f),

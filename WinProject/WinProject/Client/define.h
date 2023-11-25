@@ -48,6 +48,7 @@ enum class SCENE_TYPE
 #define KEY_TAP(key)  KEY_CHECK(key, KEY_STATE::KEY_TAP)
 #define KEY_AWAY(key) KEY_CHECK(key, KEY_STATE::KEY_AWAY)
 #define KEY_NONE(key) KEY_CHECK(key, KEY_STATE::KEY_NONE)
+#define MOUSE_POS CKeyMgr::GetInstance()->GetMousePos()
 
 enum class BRUSH_TYPE {
 

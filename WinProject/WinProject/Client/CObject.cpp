@@ -2,6 +2,7 @@
 #include "CObject.h"
 #include "Collider.h"
 #include "Animator.h"
+#include "Camera.h"
 
 CObject::CObject() :
 	m_pos{}, m_size{}, m_pCollider(nullptr),
@@ -50,11 +51,13 @@ void CObject::FinalUpdate()
 
 void CObject::Render(HDC _memDC)
 {
+	Vector2 renderPos = Camera::GetInstance()->GetRenderPos(m_pos);
+
 	Rectangle(_memDC,
-		(int)(m_pos.x - m_size.x / 2.f),
-		(int)(m_pos.y - m_size.y / 2.f),
-		(int)(m_pos.x + m_size.x / 2.f),
-		(int)(m_pos.y + m_size.y / 2.f));
+		(int)(renderPos.x - m_size.x / 2.f),
+		(int)(renderPos.y - m_size.y / 2.f),
+		(int)(renderPos.x + m_size.x / 2.f),
+		(int)(renderPos.y + m_size.y / 2.f));
 
 	ComponentRender(_memDC);
 }

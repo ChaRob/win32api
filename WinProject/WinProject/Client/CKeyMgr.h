@@ -29,6 +29,8 @@ enum class KEY
 	CTRL,
 	ENTER,
 	ESC,
+	LMBTN,
+	RMBTN,
 
 	LAST, // enum¿« ≥°
 };
@@ -43,10 +45,12 @@ class CKeyMgr
 	SINGLE(CKeyMgr);
 private:
 	vector<KeyInfo> m_vecKey;
+	Vector2 m_CurMousePos;
 	
 public:
 	void Init();
 	void Update();
 	KEY_STATE GetKeyState(KEY _key);
+	Vector2 GetMousePos() { return m_CurMousePos; }
 };
 

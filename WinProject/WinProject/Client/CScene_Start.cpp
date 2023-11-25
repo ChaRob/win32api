@@ -10,6 +10,7 @@
 #include "CollisionMgr.h"
 #include "CKeyMgr.h"
 #include "SceneMgr.h"
+#include "Camera.h"
 
 CScene_Start::CScene_Start()
 {
@@ -24,6 +25,11 @@ void CScene_Start::Update()
 	CScene::Update();
 	if (KEY_TAP(KEY::ENTER)) {
 		ChangeScene(SCENE_TYPE::TOOL);
+	}
+
+	if (KEY_TAP(KEY::LMBTN)) {
+		Vector2 mousePos = Camera::GetInstance()->GetRealPos(MOUSE_POS);
+		Camera::GetInstance()->SetLookAt(mousePos);
 	}
 }
 
@@ -62,6 +68,11 @@ void CScene_Start::Enter()
 	// Player 그룹과 Monster 그룹 간의 충돌 체크
 	CollisionMgr::GetInstance()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
 	CollisionMgr::GetInstance()->CheckGroup(GROUP_TYPE::PLAYER_MISSILE, GROUP_TYPE::MONSTER);
+
+	//Camera::GetInstance()->SetLookAt(Vector2(CCore::GetInstance()->GetResolution()) / 2);
+
+	// 카메라를 플레이어 오브젝트 중심을 따라가도록 설정
+	// Camera::GetInstance()->SetTargetObj(pObj);
 }
 
 void CScene_Start::Exit()

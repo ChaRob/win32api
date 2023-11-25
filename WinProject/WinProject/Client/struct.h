@@ -37,10 +37,19 @@ public:
 	Vector2 operator*(const float _pt) {
 		return Vector2(x * _pt, y * _pt);
 	}
+	Vector2 operator/(const int _pt) {
+		return Vector2(x / _pt, y / _pt);
+	}
+	Vector2 operator/(const float _pt) {
+		return Vector2(x / _pt, y / _pt);
+	}
 	float Length() { return sqrtf(x * x + y * y); }
 	Vector2& Normalize() {
 		float length = Length();
-		assert(length != 0.f);
+		//assert(length != 0.f);
+		if (length == 0) {
+			return *this;
+		}
 		x /= length;
 		y /= length;
 		return *this;

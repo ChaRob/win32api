@@ -16,6 +16,8 @@ int g_arrVK[(int)KEY::LAST] = {
 	VK_CONTROL,
 	VK_RETURN,
 	VK_ESCAPE,
+	VK_LBUTTON,
+	VK_RBUTTON,
 };
 
 CKeyMgr::CKeyMgr() {}
@@ -70,6 +72,13 @@ void CKeyMgr::Update()
 			}
 			m_vecKey[i].bPrev = false;
 		}
+
+		// 마우스 위치 계산
+		POINT mPos = {};
+		GetCursorPos(&mPos);
+
+		ScreenToClient(hWnd, &mPos);
+		m_CurMousePos = Vector2(mPos);
 	}
 }
 
