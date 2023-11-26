@@ -2,7 +2,7 @@
 //
 
 #include "Client.h"
-#include "pch.h"
+#include "global.h"
 
 #define MAX_LOADSTRING 100
 

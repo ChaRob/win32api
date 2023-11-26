@@ -164,6 +164,7 @@
     <ClInclude Include="EventMgr.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="func.h" />
+    <ClInclude Include="global.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="PathManager.h" />
@@ -176,6 +177,7 @@
     <ClInclude Include="SelectGDI.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Tile.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
@@ -203,6 +205,7 @@
     <ClCompile Include="SceneMgr.cpp" />
     <ClCompile Include="SceneTool.cpp" />
     <ClCompile Include="SelectGDI.cpp" />
+    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />

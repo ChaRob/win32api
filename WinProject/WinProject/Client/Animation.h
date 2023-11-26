@@ -1,5 +1,6 @@
 #pragma once
 #include "CTexture.h"
+#include "global.h"
 
 struct AnimFrame {
 	Vector2 vLT;
@@ -37,7 +38,7 @@ public:
 		m_tACC = 0.f;
 	}
 	AnimFrame& GetFrame(int _frameIdx) { return m_vecFram[_frameIdx]; }
-	const int GetMaxFrame() { return m_vecFram.size(); }
+	const size_t GetMaxFrame() { return m_vecFram.size(); }
 
 private:
 	void SetAnimName(const wstring& _animName) { m_animName = _animName; }

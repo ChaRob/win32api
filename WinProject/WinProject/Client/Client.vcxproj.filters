@@ -89,6 +89,9 @@
     <Filter Include="Engine\03.Manager\Camera">
       <UniqueIdentifier>{c39aafb6-c4b9-4351-abf5-a298c82a9284}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04.Object\Tile">
+      <UniqueIdentifier>{8f69c4f1-cf7d-4977-a695-90a4602cb832}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -184,6 +187,12 @@
     <ClInclude Include="Camera.h">
       <Filter>Engine\03.Manager\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Engine\04.Object\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>Engine\01.Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -258,6 +267,9 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Engine\03.Manager\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Engine\04.Object\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

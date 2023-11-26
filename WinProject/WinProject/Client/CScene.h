@@ -1,4 +1,5 @@
 #pragma once
+#include "global.h"
 
 // 전방선언을 하여 해당 클래스가 있음을 명시
 // object코드가 변경되어도 최대한 서로 참조하는 것을 방지

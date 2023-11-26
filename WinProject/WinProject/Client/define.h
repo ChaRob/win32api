@@ -25,6 +25,7 @@
 enum class GROUP_TYPE
 {
 	DEFALUT,
+	TILE,
 	PLAYER,
 	MONSTER,
 	PLAYER_MISSILE,
@@ -70,3 +71,5 @@ enum class EVENT_TYPE {
 
 	END
 };
+
+#define TILE_SIZE 64

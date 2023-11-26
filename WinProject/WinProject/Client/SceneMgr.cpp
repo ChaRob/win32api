@@ -25,7 +25,7 @@ void SceneMgr::Init()
 	m_arrScene[(UINT)SCENE_TYPE::TOOL]->SetName(L"Tool Scene");
 
 	// ÇöÀç ¾À ÀúÀå
-	m_pCurScene = m_arrScene[(UINT)SCENE_TYPE::START];
+	m_pCurScene = m_arrScene[(UINT)SCENE_TYPE::TOOL];
 	m_pCurScene->Enter();
 }
 

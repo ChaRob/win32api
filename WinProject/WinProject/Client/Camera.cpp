@@ -47,7 +47,7 @@ void Camera::Update()
 void Camera::CalDiff()
 {
 	// 이전 LookAt과 현재 LookAt의 차이값을 보정해서 부드러운 움직임 구현
-	m_accTime += DeltaTime;
+	m_accTime += DeltaTimef;
 
 	if (m_accTime > m_time) {
 		m_CurLookAt = m_LookAt;

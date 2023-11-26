@@ -34,3 +34,6 @@
 
 #include "C:\Users\ChaYB\Documents\ProjectFile\win32api\WinProject\WinProject\Client\SelectGDI.cpp"
 
+
+#include "C:\Users\ChaYB\Documents\ProjectFile\win32api\WinProject\WinProject\Client\Tile.cpp"
+
