@@ -7,6 +7,8 @@
 #include "resource.h"
 #include "SceneMgr.h"
 #include "UI.h"
+#include "Panel.h"
+#include "Button.h"
 
 SceneTool::SceneTool()
 {
@@ -32,7 +34,7 @@ void SceneTool::Enter()
 	Camera::GetInstance()->SetLookAt(vResolution / 2);
 
 	// UI »ý¼º
-	UI* ui = new UI(false);
+	/*UI* ui = new UI(false);
 	ui->SetName(L"ParentUI");
 	ui->SetScale(Vector2{200.f, 100.f});
 	ui->SetPos(Vector2{vResolution.x - ui->GetScale().x, 0.f});
@@ -43,8 +45,24 @@ void SceneTool::Enter()
 	newUI->SetPos(Vector2{ 0.f, 0.f });
 	
 	ui->AddChildUI(newUI);
-	
-	AddObject(ui, GROUP_TYPE::UI);
+	AddObject(ui, GROUP_TYPE::UI);*/
+
+	UI* PanelUI = new Panel;
+	PanelUI->SetName(L"Panel");
+	PanelUI->SetScale(Vector2{ 200.f, 100.f });
+	PanelUI->SetPos(Vector2{ vResolution.x - PanelUI->GetScale().x, 0.f });
+
+	UI* ButtonUI = new Button;
+	ButtonUI->SetName(L"Button");
+	ButtonUI->SetScale(Vector2{ 80.f, 50.f });
+	ButtonUI->SetPos(Vector2{ 0.f, 0.f });
+
+	PanelUI->AddChildUI(ButtonUI);
+	AddObject(PanelUI, GROUP_TYPE::UI);
+
+	UI* pClonePanel = PanelUI->Clone();
+	pClonePanel->SetPos(pClonePanel->GetPos() + Vector2(-50.f, 0.f));
+	AddObject(pClonePanel, GROUP_TYPE::UI);
 }
 
 void SceneTool::Exit()

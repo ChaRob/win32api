@@ -2,6 +2,8 @@
 #include "CScene.h"
 #include "Tile.h"
 #include "ResourceMgr.h"
+#include "Camera.h"
+#include "UI.h"
 
 CScene::CScene():
 	m_tileX(0), m_tileY(0)
@@ -43,7 +45,20 @@ void CScene::Render(HDC _memDC)
 		{
 			if (!(*iter)->IsDead())
 			{
-				(*iter)->Render(_memDC);
+				Vector2 resoultion = CCore::GetInstance()->GetResolution();
+				Vector2	pos = (*iter)->GetPos();
+				Vector2 renPos = Camera::GetInstance()->GetRenderPos(pos);
+				UI* pUI = dynamic_cast<UI*>(*iter);
+				if (pUI != nullptr) {
+					(*iter)->Render(_memDC);
+				}
+				else {
+					if (-TILE_SIZE <= renPos.x && renPos.x <= resoultion.x + TILE_SIZE &&
+						-TILE_SIZE <= renPos.y && renPos.y <= resoultion.y + TILE_SIZE)
+					{
+						(*iter)->Render(_memDC);
+					}
+				}
 				iter++;
 			}
 			else {

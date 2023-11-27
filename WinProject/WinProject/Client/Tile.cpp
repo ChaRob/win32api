@@ -32,6 +32,8 @@ void Tile::Render(HDC _dc)
 	Vector2 renderPos = Camera::GetInstance()->GetRenderPos(GetPos());
 	Vector2 scale = GetScale();
 
+	Vector2 resolution = CCore::GetInstance()->GetResolution();
+
 	BitBlt(_dc,
 		(int)renderPos.x,
 		(int)renderPos.y,

@@ -10,6 +10,19 @@ UI::UI(bool _isCamAffected):
 {
 }
 
+// 복사 생성자. 더 상위의 부모 클래스도 복사 생성자를 호출하도록 해야함.
+// 그렇지 않으면 기본 생성자를 호출함.
+UI::UI(const UI& _origin): CObject(_origin),
+	m_parentUI(nullptr), m_camAffected(_origin.m_camAffected),
+	m_mouseOn(false), m_LBtnDown(false)
+{
+	m_finalPos = _origin.m_finalPos;
+	for (int i = 0; i < _origin.m_childUI.size(); i++)
+	{
+		AddChildUI(_origin.m_childUI[i]->Clone());
+	}
+}
+
 UI::~UI()
 {
 	SafeDeleteVector(m_childUI);

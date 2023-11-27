@@ -5,6 +5,9 @@
 #include "C:\Users\ChaYB\Documents\ProjectFile\win32api\WinProject\WinProject\Client\Animator.cpp"
 
 
+#include "C:\Users\ChaYB\Documents\ProjectFile\win32api\WinProject\WinProject\Client\Button.cpp"
+
+
 #include "C:\Users\ChaYB\Documents\ProjectFile\win32api\WinProject\WinProject\Client\Camera.cpp"
 
 
@@ -24,16 +27,4 @@
 
 
 #include "C:\Users\ChaYB\Documents\ProjectFile\win32api\WinProject\WinProject\Client\CResource.cpp"
-
-
-#include "C:\Users\ChaYB\Documents\ProjectFile\win32api\WinProject\WinProject\Client\CScene.cpp"
-
-
-#include "C:\Users\ChaYB\Documents\ProjectFile\win32api\WinProject\WinProject\Client\CScene_Start.cpp"
-
-
-#include "C:\Users\ChaYB\Documents\ProjectFile\win32api\WinProject\WinProject\Client\CSound.cpp"
-
-
-#include "C:\Users\ChaYB\Documents\ProjectFile\win32api\WinProject\WinProject\Client\CTexture.cpp"
 

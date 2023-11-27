@@ -1,20 +1,20 @@
 #pragma once
 #include "UI.h"
-class Panel :
+class Button :
     public UI
 {
 public:
-    Panel();
-	virtual ~Panel();
+    Button();
+    virtual ~Button();
 
 private:
-	Vector2 m_DragStart;
+
 
 public:
 	/*virtual void Update();
 	virtual void FinalUpdate();
 	virtual void Render(HDC _dc);*/
-	Panel* Clone() { return new Panel(*this); }
+	Button* Clone() { return new Button(*this); }
 
 	virtual void MouseOn();
 

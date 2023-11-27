@@ -7,6 +7,7 @@ class UI : public CObject
 	friend class UIMgr;
 public:
 	UI(bool _isCamAffectd);
+	UI(const UI& _origin);
 	virtual ~UI();
 
 private:
@@ -22,7 +23,7 @@ public:
 	virtual void Update();
 	virtual void FinalUpdate();
 	virtual void Render(HDC _dc);
-	virtual CObject* Clone() { return new UI(*this); }
+	virtual UI* Clone() = 0;
 
 	virtual void MouseOn();
 
@@ -49,6 +50,7 @@ public:
 	}
 	Vector2 GetFinalPos() { return m_finalPos; }
 	bool IsMouseOn() { return m_mouseOn; }
+	bool IsLBtnDown() { return m_LBtnDown; }
 
 };
 
