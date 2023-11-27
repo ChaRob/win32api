@@ -13,6 +13,16 @@ public:
 		x = (float)_pt.x;
 		y = (float)_pt.y;
 	}
+	Vector2& operator+=(POINT _pt) {
+		x += (float)_pt.x;
+		y += (float)_pt.y;
+		return *this;
+	}
+	Vector2& operator+=(Vector2 _pt) {
+		x += (float)_pt.x;
+		y += (float)_pt.y;
+		return *this;
+	}
 	Vector2 operator+(const POINT _pt) {
 		return Vector2(x + (float)_pt.x, y + (float)_pt.y);
 	}

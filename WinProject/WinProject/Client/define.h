@@ -31,6 +31,8 @@ enum class GROUP_TYPE
 	PLAYER_MISSILE,
 	MONSTER_MISSILE,
 
+
+	UI,
 	END,
 };
 

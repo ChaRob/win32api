@@ -23,7 +23,7 @@ public:
 	CObject(const CObject& _origin);
 	virtual ~CObject(); // 자식 소멸자가 호출될 수 있도록 가상함수로 구현
 	virtual void Update() = 0;
-	virtual void FinalUpdate() final;
+	virtual void FinalUpdate();
 	virtual void Render(HDC _memDC);
 
 	virtual void OnCollision(Collider* _pOther);

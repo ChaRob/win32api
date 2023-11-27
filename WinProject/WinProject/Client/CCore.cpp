@@ -7,6 +7,7 @@
 #include "CollisionMgr.h"
 #include "EventMgr.h"
 #include "Camera.h"
+#include "UIMgr.h"
 
 CCore::CCore():
 	m_hwnd(0),
@@ -66,6 +67,7 @@ int CCore::Init(HWND _hwnd, POINT _ptResolution)
 	SceneMgr::GetInstance()->Init();
 	CollisionMgr::GetInstance()->Init();
 	EventMgr::GetInstance()->Init();
+	UIMgr::GetInstance()->Init();
 
 	return S_OK;
 }
@@ -78,6 +80,8 @@ void CCore::Progress()
 
 	SceneMgr::GetInstance()->Update();
 	CollisionMgr::GetInstance()->Update();
+
+	UIMgr::GetInstance()->Update();
 	// Update();
 	// 그리기 작업
 	// 게임 화면이라는 것은 매순간마다 계속 변화하는 과정.

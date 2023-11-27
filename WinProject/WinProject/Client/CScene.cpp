@@ -1,7 +1,10 @@
 #include "pch.h"
 #include "CScene.h"
+#include "Tile.h"
+#include "ResourceMgr.h"
 
-CScene::CScene()
+CScene::CScene():
+	m_tileX(0), m_tileY(0)
 {
 }
 
@@ -72,4 +75,22 @@ void CScene::DeleteGroupAll()
 	{
 		DeleteGroup((GROUP_TYPE)i);
 	}
+}
+
+void CScene::CreateTile(UINT _xCount, UINT _yCount)
+{
+	CTexture* pTex = ResourceMgr::GetInstance()->LoadTexture(L"Tile", L"texture\\Tile.bmp");
+
+	for (UINT i = 0; i < _xCount; i++)
+	{
+		for (UINT j = 0; j < _yCount; j++)
+		{
+			Tile* tile = new Tile();
+			tile->SetPos(Vector2{ (float)(j * TILE_SIZE), (float)(i * TILE_SIZE) });
+			tile->SetTexture(pTex);
+			AddObject(tile, GROUP_TYPE::TILE);
+		}
+	}
+	m_tileX = _xCount;
+	m_tileY = _yCount;
 }

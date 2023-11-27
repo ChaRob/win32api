@@ -4,7 +4,7 @@
 #include "CTexture.h"
 
 Tile::Tile():
-	m_pTileTex(nullptr), m_idx(3)
+	m_pTileTex(nullptr), m_idx(0)
 {
 	SetScale(Vector2(TILE_SIZE, TILE_SIZE));
 }

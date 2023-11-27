@@ -19,6 +19,7 @@ private:
 
 public:
 	void Update();
+	void FinalUpdate();
 	void Render(HDC _dc);
 
 	void CreateAnimation(const wstring& _animName, CTexture* _pTex, Vector2 _vLT, Vector2 _sliceSize, Vector2 _step, float _duration, UINT _frameCount);

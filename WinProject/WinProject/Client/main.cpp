@@ -17,6 +17,7 @@ ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK    TileCount(HWND, UINT, WPARAM, LPARAM);
 
 // SAL 주석(_In_) : 소스코드 주석언어, 해당 변수의 용도를 적어놓는 것
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance /* 실행 된 프로세스의 시작주소. 이때 프로세스를 여러개 실행해도 같은 주소값을 갖는다.
@@ -200,7 +201,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             switch (wmId)
             {
             case IDM_ABOUT:
+                // 정보를 누르면 modal 방식으로 창이 뜨는데, 정보창을 끄지 않는 이상 이 위치로 다시 돌아오지 않는다.
+                // 즉, 창을 종료하지 않을때까지 이 창이 포커싱을 가져간다.(그동안 DeltaTime값이 엄청 뛴다)
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+                break;
+            case ID_Menu_TileCount:
+                DialogBox(hInst, MAKEINTRESOURCE(IDD_TileCount), hWnd, TileCount);
                 break;
             case IDM_EXIT:
                 DestroyWindow(hWnd);
@@ -258,6 +264,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     /* wParam으로 키보드 값, lParam으로 마우스 값을 인식할 수 있음. */
+    /*
     case WM_KEYDOWN:
         {
             switch (wParam)
@@ -282,20 +289,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             //InvalidateRect(hWnd, nullptr, true);
         }
         break;
-    case WM_LBUTTONDOWN:
+    //case WM_LBUTTONDOWN:
         // lParam으로 마우스 x, y좌표가 들어온다.
         // 이때, lParam의 상위 2바이트와 하위 2바이트를 나누어서 좌표값을 알아낸다.
-        LmousePos.x = LOWORD(lParam);
-        LmousePos.y = HIWORD(lParam);
+        // LmousePos.x = LOWORD(lParam);
+        // LmousePos.y = HIWORD(lParam);
         // 강제로 윈도우 창의 무효화영역으로 지정해준다. 이렇게 하여 WM_PAINT 메세지를 다시 호출한다.
         //InvalidateRect(hWnd, nullptr, true);
-        LbuttonDown = true;
-        break;
-    case WM_MOUSEMOVE:
-        RmousePos.x = LOWORD(lParam);
-        RmousePos.y = HIWORD(lParam);
+        // LbuttonDown = true;
+    //    break;
+    //case WM_MOUSEMOVE:
+        // RmousePos.x = LOWORD(lParam);
+        // RmousePos.y = HIWORD(lParam);
         //InvalidateRect(hWnd, nullptr, true);
-        break;
+    //    break;
+    */
+    /*
     case WM_LBUTTONUP:
         OBJinfo newObj;
         newObj.g_objPos = { (LmousePos.x + RmousePos.x) / 2, (LmousePos.y + RmousePos.y) / 2 };
@@ -303,6 +312,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         objects.push_back(newObj);
         LbuttonDown = false;
         break;
+    */
     // SetTimer로 실행되는 구간
     case WM_TIMER:
 

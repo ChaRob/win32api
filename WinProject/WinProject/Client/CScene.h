@@ -11,12 +11,10 @@ private:
 	// 오브젝트의 그룹갯수만큼 관리할 벡터를 선언
 	vector<CObject*>	m_arrObj[(UINT)GROUP_TYPE::END];
 	wstring				m_strName;
-public:
-	// 벡터에 데이터를 추가할 수 있는 함수를 자식 요소에게 제공
-	void AddObject(CObject* _tarObj, GROUP_TYPE _type)
-	{
-		m_arrObj[(UINT)_type].push_back(_tarObj);
-	}
+
+	// 타일의 가로, 세로 갯수
+	UINT				m_tileX;
+	UINT				m_tileY;
 
 public:
 	CScene();
@@ -30,8 +28,18 @@ public:
 	virtual void Update();
 	virtual void FinalUpdate();
 	virtual void Render(HDC _memDC);
+
+public:
+	// 벡터에 데이터를 추가할 수 있는 함수를 자식 요소에게 제공
+	void AddObject(CObject* _tarObj, GROUP_TYPE _type)
+	{
+		m_arrObj[(UINT)_type].push_back(_tarObj);
+	}
 	const vector<CObject*>& GetGroupObject(GROUP_TYPE _type) { return m_arrObj[(UINT)_type]; }
 	void DeleteGroup(GROUP_TYPE _group);
 	void DeleteGroupAll();
+	void CreateTile(UINT _xCount, UINT _yCount);
+	const UINT& GetTileX() { return m_tileX; }
+	const UINT& GetTileY() { return m_tileY; }
 };
 

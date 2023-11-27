@@ -15,6 +15,11 @@ Animator::~Animator()
 
 void Animator::Update()
 {
+	
+}
+
+void Animator::FinalUpdate()
+{
 	if (m_pCurAnim != nullptr) {
 		m_pCurAnim->Update();
 

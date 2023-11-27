@@ -47,6 +47,10 @@ void CObject::FinalUpdate()
 	if (m_pCollider != nullptr) {
 		m_pCollider->FinalUpdate();
 	}
+
+	if (m_animator != nullptr) {
+		m_animator->FinalUpdate();
+	}
 }
 
 void CObject::Render(HDC _memDC)

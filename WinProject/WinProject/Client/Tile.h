@@ -21,5 +21,8 @@ private:
 
 public:
     void SetTexture(CTexture* _pTex) { m_pTileTex = _pTex; }
+    void AddImgIdx() {
+        m_idx = (m_idx + 1) % 48;
+    }
 };
 
