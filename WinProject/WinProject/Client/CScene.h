@@ -36,6 +36,7 @@ public:
 		m_arrObj[(UINT)_type].push_back(_tarObj);
 	}
 	const vector<CObject*>& GetGroupObject(GROUP_TYPE _type) { return m_arrObj[(UINT)_type]; }
+	CObject* const DeleteObjectInGroup(GROUP_TYPE _type, CObject* const _target);
 	void DeleteGroup(GROUP_TYPE _group);
 	void DeleteGroupAll();
 	void CreateTile(UINT _xCount, UINT _yCount);

@@ -109,3 +109,16 @@ void CScene::CreateTile(UINT _xCount, UINT _yCount)
 	m_tileX = _xCount;
 	m_tileY = _yCount;
 }
+
+CObject* const CScene::DeleteObjectInGroup(GROUP_TYPE _type, CObject* _target)
+{
+	vector<CObject*>::iterator iter = m_arrObj[(UINT)_type].begin();
+	for (; iter != m_arrObj[(UINT)_type].end(); iter++)
+	{
+		if (*iter == _target) {
+			m_arrObj[(UINT)_type].erase(iter);
+			break;
+		}
+	}
+	return _target;
+}

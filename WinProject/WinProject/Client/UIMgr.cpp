@@ -8,7 +8,8 @@
 #include <queue>
 using std::queue;
 
-UIMgr::UIMgr()
+UIMgr::UIMgr():
+	m_pForcused(nullptr)
 {
 
 }
@@ -22,46 +23,46 @@ void UIMgr::Init()
 
 }
 
+/*
+	1. 현재 씬에서 Forcusing된 UI를 가져온다.
+	2. 그 UI에서 타겟팅한 UI가 누구인지 찾는다.
+	3. 해당 UI의 이벤트 처리를 진행한다.
+*/
 void UIMgr::Update()
 {
-	CScene* pCurScene = SceneMgr::GetInstance()->GetCurScene();
-	const vector<CObject*>& vecUI = pCurScene->GetGroupObject(GROUP_TYPE::UI);
-
 	bool LbTap = KEY_TAP(KEY::LMBTN);
 	bool LbAway = KEY_AWAY(KEY::LMBTN);
 
-	for (int i = 0; i < vecUI.size(); i++)
-	{
-		UI* pUI = dynamic_cast<UI*>(vecUI[i]);
-		pUI = GetTargetedUI(pUI);
+	m_pForcused = GetForcusedUI(LbTap, LbAway);
 
-		if (pUI != nullptr) {
-			pUI->MouseOn();
+	if (m_pForcused == nullptr) return;
 
-			if (LbTap) {
-				pUI->m_LBtnDown = true;
-				pUI->MouseLBtnDown();
+	// 현재 포커스(가장 상위 UI)된 오브젝트만의 이벤트를 받아온다.
+	UI* targetedUI = GetTargetedUI(m_pForcused, LbTap, LbAway);
+
+	if (targetedUI != nullptr) {
+		targetedUI->MouseOn();
+
+		if (LbTap) {
+			targetedUI->m_LBtnDown = true;
+			targetedUI->MouseLBtnDown();
+		}
+		else if (LbAway) {
+			targetedUI->MouseLBtnUp();
+			if (targetedUI->m_LBtnDown) {
+				targetedUI->MouseLBtnClick();
 			}
-			else if (LbAway) {
-				pUI->MouseLBtnUp();
-				if (pUI->m_LBtnDown) {
-					pUI->MouseLBtnClick();
-				}
 
-				pUI->m_LBtnDown = false;
-			}
+			targetedUI->m_LBtnDown = false;
 		}
 	}
 }
 
-UI* UIMgr::GetTargetedUI(UI* _pParentUI)
+UI* UIMgr::GetTargetedUI(UI* _pParentUI, bool LbTap, bool LbAway)
 {
 	// 1. 부모 UI 포함, 모든 자식들을 검사한다.
 	// 2. 자식 UI가 우선적으로 이벤트가 발생되도록 한다.
 	UI* pTargetUI = nullptr;
-
-	bool LbTap = KEY_TAP(KEY::LMBTN);
-	bool LbAway = KEY_AWAY(KEY::LMBTN);
 
 	// 자주 쓰는 변수들을 정적변수로 지정
 	static vector<UI*> noneTarget;
@@ -97,4 +98,50 @@ UI* UIMgr::GetTargetedUI(UI* _pParentUI)
 	}
 
 	return pTargetUI;
+}
+
+UI* UIMgr::GetForcusedUI(bool LbTap, bool LbAway)
+{
+	CScene* pCurScene = SceneMgr::GetInstance()->GetCurScene();
+	const vector<CObject*>& vecUI = pCurScene->GetGroupObject(GROUP_TYPE::UI);
+
+	UI* pForcusedUI = m_pForcused;
+
+	if (!LbTap) {
+		return pForcusedUI;
+	}
+
+	for (int i = (int)vecUI.size() - 1; i >= 0; i--)
+	{
+		if (((UI*)vecUI[i])->IsMouseOn()) {
+			CObject* curTarget = pCurScene->DeleteObjectInGroup(GROUP_TYPE::UI, vecUI[i]);
+			pCurScene->AddObject(curTarget, GROUP_TYPE::UI);
+			pForcusedUI = (UI*)curTarget;
+			break;
+		}
+	}
+
+	return pForcusedUI;
+}
+
+void UIMgr::SetForcusUI(UI* _target)
+{
+	if (m_pForcused == _target || _target == nullptr) {
+		m_pForcused = _target;
+		return;
+	}
+
+	m_pForcused = _target;
+
+	CScene* pCurScene = SceneMgr::GetInstance()->GetCurScene();
+	const vector<CObject*>& vecUI = pCurScene->GetGroupObject(GROUP_TYPE::UI);
+
+	for (int i = (int)vecUI.size() - 1; i >= 0; i--)
+	{
+		if (((UI*)vecUI[i]) == _target) {
+			CObject* curTarget = pCurScene->DeleteObjectInGroup(GROUP_TYPE::UI, vecUI[i]);
+			pCurScene->AddObject(curTarget, GROUP_TYPE::UI);
+			break;
+		}
+	}
 }

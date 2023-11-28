@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/c,c++,visualstudio,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=c,c++,visualstudio,visualstudiocode
 
+# 특별한 폴더 제거
+Unity/
+
 ### C ###
 # Prerequisites
 *.d
