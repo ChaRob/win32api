@@ -53,3 +53,13 @@ void Tile::Update()
 {
 
 }
+
+void Tile::SaveTileObject(FILE* _pFile)
+{
+	fwrite(&m_idx, sizeof(int), 1, _pFile);
+}
+
+void Tile::LoadTileObject(FILE* _pFile)
+{
+	fread(&m_idx, sizeof(int), 1, _pFile);
+}

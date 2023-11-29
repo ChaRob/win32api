@@ -4,6 +4,7 @@
 #include "ResourceMgr.h"
 #include "Camera.h"
 #include "UI.h"
+#include "PathManager.h"
 
 CScene::CScene():
 	m_tileX(0), m_tileY(0)
@@ -94,11 +95,12 @@ void CScene::DeleteGroupAll()
 
 void CScene::CreateTile(UINT _xCount, UINT _yCount)
 {
+	DeleteGroup(GROUP_TYPE::TILE);
 	CTexture* pTex = ResourceMgr::GetInstance()->LoadTexture(L"Tile", L"texture\\Tile.bmp");
 
-	for (UINT i = 0; i < _xCount; i++)
+	for (UINT i = 0; i < _yCount; i++)
 	{
-		for (UINT j = 0; j < _yCount; j++)
+		for (UINT j = 0; j < _xCount; j++)
 		{
 			Tile* tile = new Tile();
 			tile->SetPos(Vector2{ (float)(j * TILE_SIZE), (float)(i * TILE_SIZE) });
@@ -121,4 +123,33 @@ CObject* const CScene::DeleteObjectInGroup(GROUP_TYPE _type, CObject* _target)
 		}
 	}
 	return _target;
+}
+
+void CScene::LoadData(const wstring& _strRelativePath)
+{
+	FILE* file = nullptr;
+	wstring strFilePath = PathManager::GetInstance()->GetContentPath() + _strRelativePath;
+
+	// stream 개방
+	_wfopen_s(&file, strFilePath.c_str(), L"rb"); // wb : binary Mode
+	// 파일 불러오기 실패
+	assert(file);
+
+	// 데이터 불러오기
+	UINT xCount;
+	UINT yCount;
+
+	fread(&xCount, sizeof(UINT), 1, file);
+	fread(&yCount, sizeof(UINT), 1, file);
+
+	CreateTile(xCount, yCount);
+
+	const vector<CObject*> vecTile = GetGroupObject(GROUP_TYPE::TILE);
+	for (size_t i = 0; i < vecTile.size(); i++)
+	{
+		((Tile*)vecTile[i])->LoadTileObject(file);
+	}
+
+	// stream 닫기
+	fclose(file);
 }

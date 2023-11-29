@@ -24,5 +24,8 @@ public:
     void AddImgIdx() {
         m_idx = (m_idx + 1) % 48;
     }
+
+    virtual void SaveTileObject(FILE* _pFile);
+    virtual void LoadTileObject(FILE* _pFile);
 };
 

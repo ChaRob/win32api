@@ -42,5 +42,6 @@ public:
 	void CreateTile(UINT _xCount, UINT _yCount);
 	const UINT& GetTileX() { return m_tileX; }
 	const UINT& GetTileY() { return m_tileY; }
+	void LoadData(const wstring& _strRelativePath);
 };
 

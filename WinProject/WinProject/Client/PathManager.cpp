@@ -3,7 +3,7 @@
 #include "CCore.h"
 
 PathManager::PathManager():
-	m_szContentPath{}
+	m_szContentPath{}, m_szRelativePath{}
 {
 }
 
@@ -19,7 +19,7 @@ void PathManager::Init()
 	// 상위폴더로 나가서 경로 지정
 	/* ../bin\\contents\\ */
 	size_t pathLength = wcslen(m_szContentPath);
-	for (size_t i = pathLength - 1; i >= 0; i--)
+	for (int i = pathLength - 1; i >= 0; i--)
 	{
 		// 경로중 \\를 만나면 null 문자를 넣어 해당 경로까지로 절대경로를 뽑는다.
 		if (m_szContentPath[i] == '\\')
@@ -31,4 +31,13 @@ void PathManager::Init()
 	wcscat_s(m_szContentPath, 255, L"\\bin\\contents\\"); 
 
 	//SetWindowText(CCore::GetInstance()->GetMainHwnd(), m_szContentPath);
+}
+
+wstring PathManager::GetRelativePath(const wchar_t* _filePath)
+{
+	wstring strFilePath = _filePath;
+	
+	size_t pos = strFilePath.find(m_szContentPath);
+
+	return strFilePath.substr(pos + wcslen(m_szContentPath));
 }

@@ -2,6 +2,7 @@
 #include "Missile.h"
 #include "CTimeMgr.h"
 #include "Collider.h"
+#include "Camera.h"
 
 Missile::Missile() : m_dir(Vector2{0.f, 1.f})
 {
@@ -29,12 +30,13 @@ void Missile::Render(HDC _memDC)
 {
 	Vector2 vPos = GetPos();
 	Vector2 scale = GetScale();
+	Vector2 renderPos = Camera::GetInstance()->GetRenderPos(vPos);
 
 	Ellipse(_memDC,
-		(int)(vPos.x - scale.x / 2.f),
-		(int)(vPos.y - scale.y / 2.f),
-		(int)(vPos.x + scale.x / 2.f),
-		(int)(vPos.y + scale.y / 2.f));
+		(int)(renderPos.x - scale.x / 2.f),
+		(int)(renderPos.y - scale.y / 2.f),
+		(int)(renderPos.x + scale.x / 2.f),
+		(int)(renderPos.y + scale.y / 2.f));
 
 	ComponentRender(_memDC);
 }

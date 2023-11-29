@@ -2,7 +2,7 @@
 #include "Button.h"
 
 Button::Button():
-	UI(false)
+	UI(false), m_pFunc(nullptr), m_param1(0), m_param2(0)
 {
 }
 
@@ -29,6 +29,10 @@ void Button::MouseOn()
 
 void Button::MouseLBtnClick()
 {
+	if (m_pFunc != nullptr) {
+		m_pFunc(m_param1, m_param2);
+	}
+
 }
 
 void Button::MouseLBtnUp()

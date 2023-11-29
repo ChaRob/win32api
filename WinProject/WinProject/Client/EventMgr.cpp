@@ -2,6 +2,7 @@
 #include "EventMgr.h"
 #include "CScene.h"
 #include "SceneMgr.h"
+#include "UIMgr.h"
 
 EventMgr::EventMgr()
 {
@@ -63,7 +64,7 @@ void EventMgr::Excute(const tEvent& _event)
 	case EVENT_TYPE::SCENE_CHANGE:
 		// lParam : Next Scene Type
 		SceneMgr::GetInstance()->ChangeCurScene((SCENE_TYPE)_event.lParam);
-
+		UIMgr::GetInstance()->SetForcusUI(nullptr);
 		break;
 	default:
 		break;

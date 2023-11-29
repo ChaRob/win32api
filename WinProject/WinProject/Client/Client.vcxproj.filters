@@ -92,6 +92,18 @@
     <Filter Include="Engine\04.Object\Tile">
       <UniqueIdentifier>{8f69c4f1-cf7d-4977-a695-90a4602cb832}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04.Object\UI">
+      <UniqueIdentifier>{84833735-175f-4d4f-ad06-0e83de5a7a43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\UI\Panel">
+      <UniqueIdentifier>{0d9b53e6-e7ba-46d1-8ab2-c54489061991}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\UI\Button">
+      <UniqueIdentifier>{c4837522-476c-45b0-87b3-023bcac3a450}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\UIMgr">
+      <UniqueIdentifier>{53954e1e-6d27-4baa-9d65-496c15b8ea6d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -193,6 +205,18 @@
     <ClInclude Include="global.h">
       <Filter>Engine\01.Header</Filter>
     </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Engine\04.Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Panel.h">
+      <Filter>Engine\04.Object\UI\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Engine\04.Object\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UIMgr.h">
+      <Filter>Engine\03.Manager\UIMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -270,6 +294,18 @@
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>Engine\04.Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Engine\04.Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Panel.cpp">
+      <Filter>Engine\04.Object\UI\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Engine\04.Object\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="UIMgr.cpp">
+      <Filter>Engine\03.Manager\UIMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

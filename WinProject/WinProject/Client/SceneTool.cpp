@@ -9,6 +9,10 @@
 #include "UI.h"
 #include "Panel.h"
 #include "Button.h"
+#include "CollisionMgr.h"
+#include "PathManager.h"
+
+void ChangeScene(DWORD_PTR, DWORD_PTR);
 
 SceneTool::SceneTool()
 {
@@ -23,6 +27,15 @@ void SceneTool::Update()
 	CScene::Update();
 
 	SetTileIdx();
+
+	if (KEY_TAP(KEY::LSHIFT)) {
+		SaveFile();
+		// SaveData(L"tile\\Test.tile");
+	}
+
+	if (KEY_TAP(KEY::CTRL)) {
+		LoadFile();
+	}
 }
 
 void SceneTool::Enter()
@@ -52,21 +65,25 @@ void SceneTool::Enter()
 	PanelUI->SetScale(Vector2{ 200.f, 100.f });
 	PanelUI->SetPos(Vector2{ vResolution.x - PanelUI->GetScale().x, 0.f });
 
-	UI* ButtonUI = new Button;
+	Button* ButtonUI = new Button;
 	ButtonUI->SetName(L"Button");
 	ButtonUI->SetScale(Vector2{ 80.f, 50.f });
 	ButtonUI->SetPos(Vector2{ 0.f, 0.f });
+	ButtonUI->SetClickCallBack(ChangeScene, 0, 0);
 
 	PanelUI->AddChildUI(ButtonUI);
 	AddObject(PanelUI, GROUP_TYPE::UI);
 
-	UI* pClonePanel = PanelUI->Clone();
+	/*UI* pClonePanel = PanelUI->Clone();
 	pClonePanel->SetPos(pClonePanel->GetPos() + Vector2(-50.f, 0.f));
-	AddObject(pClonePanel, GROUP_TYPE::UI);
+	AddObject(pClonePanel, GROUP_TYPE::UI);*/
 }
 
 void SceneTool::Exit()
 {
+	DeleteGroupAll();
+
+	CollisionMgr::GetInstance()->DeleteGroup();
 }
 
 void SceneTool::SetTileIdx()
@@ -94,6 +111,88 @@ void SceneTool::SetTileIdx()
 	}
 }
 
+void SceneTool::SaveData(const wstring& _strFilePath)
+{
+	// 커널 오브젝트 : RAM과 저장공간 사이의 Stream을 연결해주도록 하는 오브젝트
+	FILE* file = nullptr;
+
+	// stream 개방
+	// Mode : w 면 쓰기(write), r이면 읽기(read)
+	// 각 모드에 따른 방법대로, 만약 지정된 경로에 파일이 없다면 새로 파일을 생성한다.
+	// wb : binary Mode, b를 안붙이면 기본적으로 문자 데이터로 인식한다.(다른 의도로 인해 파일 형태가 달라질 수 있음)
+	// b를 붙이면 해당 파일값을 바이너리값 자체로 보기로 한다.
+	_wfopen_s(&file, _strFilePath.c_str(), L"wb");
+	// 파일 불러오기 실패
+	assert(file);
+
+	// 데이터 저장
+	UINT xCount = GetTileX();
+	UINT yCount = GetTileY();
+
+	fwrite(&xCount, sizeof(UINT), 1, file);
+	fwrite(&yCount, sizeof(UINT), 1, file);
+
+	const vector<CObject*> vecTile = GetGroupObject(GROUP_TYPE::TILE);
+	for (size_t i = 0; i < vecTile.size(); i++)
+	{
+		((Tile*)vecTile[i])->SaveTileObject(file);
+	}
+
+	// stream 닫기
+	fclose(file);
+}
+
+void SceneTool::SaveFile()
+{
+	wchar_t szName[256] = {};
+
+	OPENFILENAME ofn = {};
+
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = CCore::GetInstance()->GetMainHwnd();
+	ofn.lpstrFile = szName;
+	ofn.nMaxFile = sizeof(szName);
+	ofn.lpstrFilter = L"ALL\0*.*\0*.tile\0*.tile\0";
+	ofn.nFilterIndex = 2;
+	ofn.lpstrFileTitle = nullptr;
+	ofn.nMaxFileTitle = 0;
+	wstring path = PathManager::GetInstance()->GetContentPath();
+	path += L"tile";
+	ofn.lpstrInitialDir = path.c_str();
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+	if (GetSaveFileName(&ofn)) {
+		SaveData(szName);
+	}
+}
+
+void SceneTool::LoadFile()
+{
+	wchar_t szName[256] = {};
+
+	OPENFILENAME ofn = {};
+
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = CCore::GetInstance()->GetMainHwnd();
+	ofn.lpstrFile = szName;
+	ofn.nMaxFile = sizeof(szName);
+	ofn.lpstrFilter = L"ALL\0*.*\0*.tile\0*.tile\0";
+	ofn.nFilterIndex = 2;
+	ofn.lpstrFileTitle = nullptr;
+	ofn.nMaxFileTitle = 0;
+	wstring path = PathManager::GetInstance()->GetContentPath();
+	path += L"tile";
+	ofn.lpstrInitialDir = path.c_str();
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+	if (GetOpenFileName(&ofn)) {
+		LoadData(PathManager::GetInstance()->GetRelativePath(szName));
+	}
+}
+
+void ChangeScene(DWORD_PTR, DWORD_PTR) {
+	ChangeScene(SCENE_TYPE::START);
+}
 
 /*
 	Tile Count Window Proc
