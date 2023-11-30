@@ -73,6 +73,8 @@ void CScene_Start::Enter()
 
 	// 카메라를 플레이어 오브젝트 중심을 따라가도록 설정
 	// Camera::GetInstance()->SetTargetObj(pObj);
+	Camera::GetInstance()->FadeIn(5.f);
+	Camera::GetInstance()->FadeOut(5.f);
 }
 
 void CScene_Start::Exit()

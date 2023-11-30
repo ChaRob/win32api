@@ -28,3 +28,18 @@ void CTexture::Load(const wstring& _strFilePath)
 	// 비트맵 정보 반환
 	GetObject(m_hBit, sizeof(BITMAP), &bitInfo);
 }
+
+void CTexture::Create(UINT _width, UINT _height)
+{
+	HDC mainDC = CCore::GetInstance()->GetMainDC();
+
+	m_hBit = CreateCompatibleBitmap(mainDC, _width, _height);
+	m_dc = CreateCompatibleDC(mainDC);
+
+	// m_memDC가 기존에 가리키고 있던 bitmap은 사용하지 않으므로 제거한다.
+	HBITMAP hOldBit = (HBITMAP)SelectObject(m_dc, m_hBit);
+	DeleteObject(hOldBit);
+
+	// 비트맵 정보 반환
+	GetObject(m_hBit, sizeof(BITMAP), &bitInfo);
+}

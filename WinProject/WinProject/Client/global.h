@@ -9,6 +9,8 @@ using std::wstring;
 #include <map>
 using std::map;
 using std::make_pair;
+#include <queue>
+using std::queue;
 
 // TransPareantBit를 쓰기 위한 라이브러리 참조
 #pragma comment(lib, "Msimg32.lib")

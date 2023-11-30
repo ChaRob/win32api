@@ -1,5 +1,6 @@
 #pragma once
 #include "pch.h"
+#include "CTexture.h"
 /*
 	싱글톤 패턴
 	객체의 생성을 1개로 제한함
@@ -37,8 +38,9 @@ private:
 	POINT m_ptResolution;	// 메인 윈도우 해상도
 	HDC m_hDC;				// 메인 윈도우에 Draw 할 DC
 
-	HBITMAP m_hBit;
-	HDC m_memDC;
+	//HBITMAP m_hBit;
+	//HDC m_memDC;
+	CTexture* m_pMemTex;	// 백버퍼 텍스쳐
 
 	HBRUSH m_arrBrush[(UINT)BRUSH_TYPE::END];
 	HPEN m_arrPen[(UINT)PEN_TYPE::END];

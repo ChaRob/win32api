@@ -40,3 +40,19 @@ CTexture* ResourceMgr::FindTexture(const wstring& _strKey)
     }
     return (CTexture*)iter->second;
 }
+
+CTexture* ResourceMgr::CreateTexture(const wstring& _strKey, UINT _width, UINT _height)
+{
+    CTexture* pTex = FindTexture(_strKey);
+    if (pTex != nullptr) {
+        return pTex;
+    }
+
+    pTex = new CTexture;
+    pTex->Create(_width, _height);
+    pTex->SetKey(_strKey);
+
+    m_mapTexture.insert(make_pair(_strKey, pTex));
+
+    return pTex;
+}

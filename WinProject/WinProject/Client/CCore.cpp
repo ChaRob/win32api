@@ -8,21 +8,23 @@
 #include "EventMgr.h"
 #include "Camera.h"
 #include "UIMgr.h"
+#include "ResourceMgr.h"
 
 CCore::CCore():
 	m_hwnd(0),
 	m_ptResolution{},
 	m_hDC(0),
-	m_hBit(0),
-	m_memDC(0),
+	//m_hBit(0),
+	//m_memDC(0),
+	m_pMemTex(nullptr),
 	m_arrBrush{},
 	m_arrPen{}
 {}
 CCore::~CCore()
 {
 	ReleaseDC(m_hwnd, m_hDC);
-	DeleteDC(m_memDC);
-	DeleteObject(m_hBit);
+	/*DeleteDC(m_memDC);
+	DeleteObject(m_hBit);*/
 
 	for (UINT i = 0; i < (UINT)PEN_TYPE::END; i++)
 	{
@@ -50,12 +52,14 @@ int CCore::Init(HWND _hwnd, POINT _ptResolution)
 	m_hDC = GetDC(m_hwnd);
 
 	// 이중 버퍼링 용도의 비트맵과 DC 생성
-	m_hBit = CreateCompatibleBitmap(m_hDC, m_ptResolution.x, m_ptResolution.y); // 기존 DC와 호환성 있는 동작이 가능하도록 한 함수
-	m_memDC = CreateCompatibleDC(m_hDC);
+	m_pMemTex = ResourceMgr::GetInstance()->CreateTexture(L"Backbuffer", (UINT)m_ptResolution.x, (UINT)m_ptResolution.y);
 
-	// m_memDC가 기존에 가리키고 있던 bitmap은 사용하지 않으므로 제거한다.
-	HBITMAP hOldBit = (HBITMAP)SelectObject(m_memDC, m_hBit);
-	DeleteObject(hOldBit);
+	//m_hBit = CreateCompatibleBitmap(m_hDC, m_ptResolution.x, m_ptResolution.y); // 기존 DC와 호환성 있는 동작이 가능하도록 한 함수
+	//m_memDC = CreateCompatibleDC(m_hDC);
+
+	//// m_memDC가 기존에 가리키고 있던 bitmap은 사용하지 않으므로 제거한다.
+	//HBITMAP hOldBit = (HBITMAP)SelectObject(m_memDC, m_hBit);
+	//DeleteObject(hOldBit);
 
 	// 자주 사용할 브러쉬와 펜을 등록
 	CreateBrushPen();
@@ -64,6 +68,7 @@ int CCore::Init(HWND _hwnd, POINT _ptResolution)
 	PathManager::GetInstance()->Init();
 	CKeyMgr::GetInstance()->Init();
 	CTimeMgr::GetInstance()->Init();
+	Camera::GetInstance()->Init();
 	SceneMgr::GetInstance()->Init();
 	CollisionMgr::GetInstance()->Init();
 	EventMgr::GetInstance()->Init();
@@ -88,14 +93,15 @@ void CCore::Progress()
 	// 한 장면을 그리고 보여주고, 뒤에서 새로 그린 것을 다시 대체해서 보여주고...반복
 
 	// 그리기 작업 전 화면 청소, 재구성
-	Rectangle(m_memDC, -1, -1, m_ptResolution.x + 1, m_ptResolution.y + 1);
+	Rectangle(m_pMemTex->GetDC(), -1, -1, m_ptResolution.x + 1, m_ptResolution.y + 1);
 
 	// Render();
-	SceneMgr::GetInstance()->Render(m_memDC);
+	SceneMgr::GetInstance()->Render(m_pMemTex->GetDC());
+	Camera::GetInstance()->Render(m_pMemTex->GetDC());
 
 	// 다른 화면에서 그린 그림을 복사해서 그려준다.
 	// 이 프로젝트(WinAPI)에서는 CPU가 rendering을 담당하지만, DirectX를 사용해서 GPU에게 이 일을 맡기면 속도를 더 늘릴 수 있다.
-	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_memDC, 0, 0, SRCCOPY);
+	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_pMemTex->GetDC(), 0, 0, SRCCOPY);
 
 	CTimeMgr::GetInstance()->render();
 

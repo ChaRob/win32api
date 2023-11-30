@@ -18,5 +18,6 @@ public:
     UINT GetBitmapWidth() { return bitInfo.bmWidth; }
     UINT GetBitmapHeight() { return bitInfo.bmHeight; }
     const HDC& GetDC() { return m_dc; }
+    void Create(UINT _width, UINT _height);
 };
 

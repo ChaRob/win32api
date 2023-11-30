@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "Button.h"
 
-Button::Button():
-	UI(false), m_pFunc(nullptr), m_param1(0), m_param2(0)
+Button::Button() :
+	UI(false), m_pFunc(nullptr), m_param1(0), m_param2(0),
+	m_pSceneFunc(nullptr), m_pSceneInst(nullptr)
 {
 }
 
@@ -33,6 +34,9 @@ void Button::MouseLBtnClick()
 		m_pFunc(m_param1, m_param2);
 	}
 
+	if (m_pSceneFunc && m_pSceneInst) {
+		((*m_pSceneInst).*m_pSceneFunc)();
+	}
 }
 
 void Button::MouseLBtnUp()

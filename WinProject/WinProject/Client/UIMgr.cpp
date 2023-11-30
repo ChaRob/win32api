@@ -5,8 +5,6 @@
 #include "UI.h"
 #include "SceneMgr.h"
 #include "CKeyMgr.h"
-#include <queue>
-using std::queue;
 
 UIMgr::UIMgr():
 	m_pForcused(nullptr)

@@ -69,7 +69,7 @@ void SceneTool::Enter()
 	ButtonUI->SetName(L"Button");
 	ButtonUI->SetScale(Vector2{ 80.f, 50.f });
 	ButtonUI->SetPos(Vector2{ 0.f, 0.f });
-	ButtonUI->SetClickCallBack(ChangeScene, 0, 0);
+	ButtonUI->SetClickCallBack((SCENE_MEMFUNC)&SceneTool::SaveFile, this);
 
 	PanelUI->AddChildUI(ButtonUI);
 	AddObject(PanelUI, GROUP_TYPE::UI);
