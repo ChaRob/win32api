@@ -104,6 +104,30 @@
     <Filter Include="Engine\03.Manager\UIMgr">
       <UniqueIdentifier>{53954e1e-6d27-4baa-9d65-496c15b8ea6d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\08.Module\AI">
+      <UniqueIdentifier>{712eb35d-bbc7-40b1-999a-0f26acb4c730}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08.Module\AI\State">
+      <UniqueIdentifier>{c87013b0-f8d1-4e58-a507-9154f157b74d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08.Module\AI\State\Idle">
+      <UniqueIdentifier>{0b97a471-19d5-43cd-b56f-08018a81a40b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08.Module\AI\State\Attack">
+      <UniqueIdentifier>{685b8749-7fc1-4ffd-aa9d-7b4b5fc3ab60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08.Module\AI\State\Dead">
+      <UniqueIdentifier>{eaf62163-6e3e-41bd-980c-cd09c4851f0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08.Module\AI\State\Trace">
+      <UniqueIdentifier>{c017549a-dbb3-4eb7-bda9-37744653dd9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\09. Factory">
+      <UniqueIdentifier>{10566498-38cd-4878-aad7-61122fefa217}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\09. Factory\MonFactory">
+      <UniqueIdentifier>{645de44b-2b51-4137-88c7-5f276c4dafb7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -217,6 +241,27 @@
     <ClInclude Include="UIMgr.h">
       <Filter>Engine\03.Manager\UIMgr</Filter>
     </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>Engine\08.Module\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Engine\08.Module\AI\State</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleState.h">
+      <Filter>Engine\08.Module\AI\State\Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackState.h">
+      <Filter>Engine\08.Module\AI\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadState.h">
+      <Filter>Engine\08.Module\AI\State\Dead</Filter>
+    </ClInclude>
+    <ClInclude Include="TraceState.h">
+      <Filter>Engine\08.Module\AI\State\Trace</Filter>
+    </ClInclude>
+    <ClInclude Include="MonFactory.h">
+      <Filter>Engine\09. Factory\MonFactory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -306,6 +351,27 @@
     </ClCompile>
     <ClCompile Include="UIMgr.cpp">
       <Filter>Engine\03.Manager\UIMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>Engine\08.Module\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>Engine\08.Module\AI\State</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleState.cpp">
+      <Filter>Engine\08.Module\AI\State\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackState.cpp">
+      <Filter>Engine\08.Module\AI\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="DeadState.cpp">
+      <Filter>Engine\08.Module\AI\State\Dead</Filter>
+    </ClCompile>
+    <ClCompile Include="TraceState.cpp">
+      <Filter>Engine\08.Module\AI\State\Trace</Filter>
+    </ClCompile>
+    <ClCompile Include="MonFactory.cpp">
+      <Filter>Engine\09. Factory\MonFactory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

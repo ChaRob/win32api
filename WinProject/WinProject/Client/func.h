@@ -1,6 +1,7 @@
 #pragma once
 
 class CObject;
+class AI;
 
 void CreateObject(CObject* _pObj, GROUP_TYPE _group);
 void DeleteObejct(CObject* _pObj);
@@ -28,3 +29,5 @@ void SafeDeleteMap(map<T1, T2>& _map) {
 	}
 	_map.clear();
 }
+
+void ChangeAIState(AI* _ai, MON_STATE _nextState);

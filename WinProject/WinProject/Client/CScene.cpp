@@ -7,7 +7,7 @@
 #include "PathManager.h"
 
 CScene::CScene():
-	m_tileX(0), m_tileY(0)
+	m_tileX(0), m_tileY(0), m_player(nullptr)
 {
 }
 
@@ -40,6 +40,12 @@ void CScene::Render(HDC _memDC)
 {
 	for (UINT i = 0; i < (UINT)GROUP_TYPE::END; i++)
 	{
+		// 타일 최적화 렌더링
+		if (i == (UINT)GROUP_TYPE::TILE) {
+			Render_Tile(_memDC);
+			continue;
+		}
+
 		vector<CObject*>::iterator iter = m_arrObj[i].begin();
 
 		for (; iter != m_arrObj[i].end();)
@@ -50,15 +56,15 @@ void CScene::Render(HDC _memDC)
 				Vector2	pos = (*iter)->GetPos();
 				Vector2 renPos = Camera::GetInstance()->GetRenderPos(pos);
 				UI* pUI = dynamic_cast<UI*>(*iter);
-				if (pUI != nullptr) {
+				if (pUI != nullptr && !pUI->IsCamEffected()) {
 					(*iter)->Render(_memDC);
 				}
 				else {
-					if (-TILE_SIZE <= renPos.x && renPos.x <= resoultion.x + TILE_SIZE &&
-						-TILE_SIZE <= renPos.y && renPos.y <= resoultion.y + TILE_SIZE)
-					{
-						(*iter)->Render(_memDC);
-					}
+				if (-TILE_SIZE <= renPos.x && renPos.x <= resoultion.x + TILE_SIZE &&
+					-TILE_SIZE <= renPos.y && renPos.y <= resoultion.y + TILE_SIZE)
+				{
+					(*iter)->Render(_memDC);
+				}
 				}
 				iter++;
 			}
@@ -152,4 +158,40 @@ void CScene::LoadData(const wstring& _strRelativePath)
 
 	// stream 닫기
 	fclose(file);
+}
+
+void CScene::Render_Tile(HDC _dc)
+{
+	vector<CObject*> vecTile = GetGroupObject(GROUP_TYPE::TILE);
+
+	Vector2 cameraLook = Camera::GetInstance()->GetLookAt();
+	Vector2 resolution = CCore::GetInstance()->GetResolution();
+
+	Vector2 leftTop = cameraLook - resolution / 2.f;
+
+	int tileSize = TILE_SIZE;
+
+	int col = (int)leftTop.x / tileSize;
+	int row = (int)leftTop.y / tileSize;
+
+	int clientWidth = (int)resolution.x / tileSize;
+	int clientHeight = (int)resolution.y / tileSize;
+
+	for (int i = row; i <= row + clientHeight; i++)
+	{
+		for (int j = col; j <= col + clientWidth; j++)
+		{
+			// 타일 인덱스 범위를 벗어나면 다음 타일로
+			if (i < 0 || m_tileX <= i ||
+				j < 0 || m_tileY <= j)
+			{
+				continue;
+			}
+
+			int idx = m_tileX * i + j;
+			if (idx >= 0) {
+				vecTile[idx]->Render(_dc);
+			}
+		}
+	}
 }

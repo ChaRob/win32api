@@ -3,6 +3,8 @@
 #include "CScene.h"
 #include "SceneMgr.h"
 #include "UIMgr.h"
+#include "AI.h"
+#include "State.h"
 
 EventMgr::EventMgr()
 {
@@ -66,7 +68,14 @@ void EventMgr::Excute(const tEvent& _event)
 		SceneMgr::GetInstance()->ChangeCurScene((SCENE_TYPE)_event.lParam);
 		UIMgr::GetInstance()->SetForcusUI(nullptr);
 		break;
-	default:
+	case EVENT_TYPE::AISTATE_CHANGE:
+		// IParam : AI
+		// wParam : next state
+		AI* ai = (AI*)_event.lParam;
+		MON_STATE nextState = (MON_STATE)_event.wParam;
+
+		ai->ChangeState(nextState);
+
 		break;
 	}
 }

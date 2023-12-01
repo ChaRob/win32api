@@ -70,8 +70,18 @@ enum class EVENT_TYPE {
 	CREATE_OBJECT,
 	DELETE_OBJECT,
 	SCENE_CHANGE,
+	AISTATE_CHANGE,
 
 	END
 };
 
 #define TILE_SIZE 64
+
+enum class MON_STATE {
+	IDLE,
+	PATROL,
+	TRACE,
+	ATTACK,
+	RUN, // µµ¡÷
+	DEAD,
+};

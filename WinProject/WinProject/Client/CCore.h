@@ -45,6 +45,9 @@ private:
 	HBRUSH m_arrBrush[(UINT)BRUSH_TYPE::END];
 	HPEN m_arrPen[(UINT)PEN_TYPE::END];
 
+	// ¸Þ´º
+	HMENU m_hMenu;
+
 private:
 	void Update();
 	void Render();
@@ -58,5 +61,9 @@ public:
 	HDC GetMainDC() { return m_hDC; }
 	const HBRUSH& GetBrush(BRUSH_TYPE _brush) { return m_arrBrush[(UINT)_brush]; }
 	const HPEN& GetPen(PEN_TYPE _pen) { return m_arrPen[(UINT)_pen]; }
+	HMENU GetMenu() { return m_hMenu; }
+	void DockMenu();
+	void DivideMenu();
+	void ChangeWindowSize(Vector2 _resolution, bool _menu);
 };
 

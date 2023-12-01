@@ -40,6 +40,9 @@ void SceneTool::Update()
 
 void SceneTool::Enter()
 {
+	// 툴 Scene에서 사용할 메뉴바를 붙인다.
+	CCore::GetInstance()->DockMenu();
+
 	// 타일 생성
 	CreateTile(5, 5);
 
@@ -84,6 +87,8 @@ void SceneTool::Exit()
 	DeleteGroupAll();
 
 	CollisionMgr::GetInstance()->DeleteGroup();
+
+	CCore::GetInstance()->DivideMenu();
 }
 
 void SceneTool::SetTileIdx()

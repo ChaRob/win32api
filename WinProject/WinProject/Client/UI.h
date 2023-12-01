@@ -51,6 +51,7 @@ public:
 	Vector2 GetFinalPos() { return m_finalPos; }
 	bool IsMouseOn() { return m_mouseOn; }
 	bool IsLBtnDown() { return m_LBtnDown; }
+	bool IsCamEffected() { return m_camAffected; }
 
 };
 

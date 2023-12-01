@@ -23,7 +23,7 @@ Player::Player()
 
 	// texture 불러오기
 	// m_pTex = ResourceMgr::GetInstance()->LoadTexture(L"PlayerTex", L"texture\\test.bmp");
-	/*CTexture* m_pTex = ResourceMgr::GetInstance()->LoadTexture(L"PlayerTex", L"texture\\zelda.bmp");
+	CTexture* m_pTex = ResourceMgr::GetInstance()->LoadTexture(L"PlayerTex", L"texture\\zelda.bmp");
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"Walk_down", m_pTex, Vector2{0.f, 260.f}, Vector2{60.f, 65.f}, Vector2{60.f,0.f}, 0.1f, 10);
 
@@ -33,7 +33,7 @@ Player::Player()
 	for (int i = 0; i < pAnim->GetMaxFrame(); i++)
 	{
 		pAnim->GetFrame(i).offset = Vector2{ 0.f, -20.f };
-	}*/
+	}
 }
 
 Player::~Player()
@@ -73,11 +73,11 @@ void Player::Render(HDC _memDC)
 	// 실제 좌표값은 음수가 가능하기 때문에
 	// int로 형변환을 해준다.
 
-	CTexture* m_pTex = ResourceMgr::GetInstance()->LoadTexture(L"PlayerTex", L"texture\\zelda_alpha.bmp");
+	//CTexture* m_pTex = ResourceMgr::GetInstance()->LoadTexture(L"PlayerTex", L"texture\\zelda.bmp");
 	
 	Vector2 renPos = Camera::GetInstance()->GetRenderPos(GetPos());
 
-	float width = (float)m_pTex->GetBitmapWidth();
+	/*float width = (float)m_pTex->GetBitmapWidth();
 	float height = (float)m_pTex->GetBitmapHeight();
 
 	BLENDFUNCTION bf = {};
@@ -93,7 +93,7 @@ void Player::Render(HDC _memDC)
 		(int)(height),
 		m_pTex->GetDC(),
 		0, 0, width, height,
-		bf);
+		bf);*/
 	
 	/*int width = (int)m_pTex->GetBitmapWidth();
 	int height = (int)m_pTex->GetBitmapHeight();

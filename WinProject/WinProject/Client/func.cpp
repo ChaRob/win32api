@@ -29,3 +29,13 @@ void ChangeScene(SCENE_TYPE _scene)
 
 	EventMgr::GetInstance()->AddEvent(newEvent);
 }
+
+void ChangeAIState(AI* _ai, MON_STATE _nextState)
+{
+	tEvent newEvent = {};
+	newEvent.eEvent = EVENT_TYPE::AISTATE_CHANGE;
+	newEvent.lParam = (DWORD_PTR)_ai;
+	newEvent.wParam = (DWORD_PTR)_nextState;
+
+	EventMgr::GetInstance()->AddEvent(newEvent);
+}

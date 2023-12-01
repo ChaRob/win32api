@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "Resource.h"
 #include "CCore.h"
 #include "CKeyMgr.h"
 #include "CTimeMgr.h"
@@ -31,6 +32,8 @@ CCore::~CCore()
 		DeleteObject(m_arrPen[i]);
 		//delete m_arrPen[i];
 	}
+
+	DestroyMenu(m_hMenu);
 }
 
 int CCore::Init(HWND _hwnd, POINT _ptResolution)
@@ -40,12 +43,10 @@ int CCore::Init(HWND _hwnd, POINT _ptResolution)
 
 	// 해상도에 맞게 윈도우 크기 조절
 	// window 7, 10에 따라서 경게(border)가 다르기에 지정한 해상도가 나오도록 잡아준다.
-	RECT rt = {0, 0, m_ptResolution.x, m_ptResolution.y};
-	AdjustWindowRect(
-		&rt, /* LPRECT, 곧 RECT*를 의미. 함수가 종료되면 rt에 저장된 값을 접근해서 수정해줌. */
-		WS_OVERLAPPEDWINDOW, /* 자주 쓰는 윈도우 세팅을 합쳐둔 것 */
-		TRUE);
-	SetWindowPos(m_hwnd, nullptr, 100, 100, rt.right - rt.left, rt.bottom - rt.top, 0);
+	ChangeWindowSize(m_ptResolution, false);
+
+	// 메뉴바 생성
+	m_hMenu = LoadMenu(nullptr, MAKEINTRESOURCE(IDC_CLIENT));
 
 	// Device Context 초기화 및 호출
 	// 메세지 기반 방식이 아닌, 우리가 원할 때 그림을 그릴 수 있도록 설정함.
@@ -110,6 +111,31 @@ void CCore::Progress()
 
 	// 카메라 움직임 처리한다.
 	Camera::GetInstance()->Update();
+}
+
+void CCore::DockMenu()
+{
+	SetMenu(m_hwnd, m_hMenu);
+	ChangeWindowSize(GetResolution(), true);
+}
+
+void CCore::DivideMenu()
+{
+	SetMenu(m_hwnd, nullptr);
+	ChangeWindowSize(GetResolution(), false);
+}
+
+void CCore::ChangeWindowSize(Vector2 _resolution, bool _menu)
+{
+	// 해상도에 맞게 윈도우 크기 조절
+	// window 7, 10에 따라서 경게(border)가 다르기에 지정한 해상도가 나오도록 잡아준다.
+	RECT rt = { 0, 0, _resolution.x, _resolution.y };
+	AdjustWindowRect(
+		&rt, /* LPRECT, 곧 RECT*를 의미. 함수가 종료되면 rt에 저장된 값을 접근해서 수정해줌. */
+		WS_OVERLAPPEDWINDOW, /* 자주 쓰는 윈도우 세팅을 합쳐둔 것 */
+		_menu /* 메뉴바가 있는지 여부 */
+	);
+	SetWindowPos(m_hwnd, nullptr, 100, 100, rt.right - rt.left, rt.bottom - rt.top, 0);
 }
 
 void CCore::CreateBrushPen()

@@ -1,5 +1,6 @@
 #pragma once
 #include "global.h"
+#include "MonFactory.h"
 
 // 전방선언을 하여 해당 클래스가 있음을 명시
 // object코드가 변경되어도 최대한 서로 참조하는 것을 방지
@@ -15,6 +16,8 @@ private:
 	// 타일의 가로, 세로 갯수
 	UINT				m_tileX;
 	UINT				m_tileY;
+
+	CObject*			m_player;
 
 public:
 	CScene();
@@ -43,5 +46,10 @@ public:
 	const UINT& GetTileX() { return m_tileX; }
 	const UINT& GetTileY() { return m_tileY; }
 	void LoadData(const wstring& _strRelativePath);
+	void RegisterPlayer(CObject* _player) { m_player = _player; }
+	CObject* GetPlayer() { return m_player; }
+
+private:
+	void Render_Tile(HDC _dc);
 };
 
